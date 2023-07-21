@@ -5,8 +5,8 @@ export const Background = styled.div`
   height: 100vh;
   background-image: linear-gradient(
     to top,
-    ${(props) => (props.isNight ? props.theme.night.start : props.theme.day.start)},
-    ${(props) => (props.isNight ? props.theme.night.end : props.theme.day.end)} 80%
+    ${(props) => (props.$isNight ? props.theme.night.start : props.theme.day.start)},
+    ${(props) => (props.$isNight ? props.theme.night.end : props.theme.day.end)} 80%
   );
 `;
 
