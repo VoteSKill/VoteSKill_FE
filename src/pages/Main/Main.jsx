@@ -7,13 +7,12 @@ import * as S from 'pages/Main/Main.Style';
 function Main({ isMain }) {
   const { openModal } = useModal();
   return (
-    <div>
-      <Layout isMain={true}></Layout>
+    <Layout isMain={true}>
       <S.KakaoLoginButton onClick={openModal}></S.KakaoLoginButton>
       <Modal>
         <UserInfo />
       </Modal>
-    </div>
+    </Layout>
   );
 }
 
