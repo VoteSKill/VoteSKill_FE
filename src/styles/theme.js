@@ -12,8 +12,8 @@ const night = {
 };
 
 const day = {
-  start: '#870000',
-  end: '#f2c94c',
+  end: '#ffd5bd',
+  start: '#a3b9ff',
 };
 
 const borderRadius = {
