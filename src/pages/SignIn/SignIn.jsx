@@ -26,23 +26,21 @@ function SignIn() {
   };
 
   return (
-    <>
-      <Layout isMain={true}>
-        <S.SignInDiv>
-          <S.Textarea placeholder={placeholder} onFocus={handleFocus} onBlur={handleBlur}></S.Textarea>
-          <br />
-          <S.Button
-            type="submit"
-            className={isHovering ? 'grow' : ''}
-            onMouseOver={handleMouseOver}
-            onMouseOut={handleMouseOut}
-            onClick={handleClick}
-          >
-            Go To KILL.
-          </S.Button>
-        </S.SignInDiv>
-      </Layout>
-    </>
+    <Layout isMain={true}>
+      <S.SignInDiv>
+        <S.Textarea placeholder={placeholder} onFocus={handleFocus} onBlur={handleBlur}></S.Textarea>
+        <br />
+        <S.Button
+          type="submit"
+          className={isHovering ? 'grow' : ''}
+          onMouseOver={handleMouseOver}
+          onMouseOut={handleMouseOut}
+          onClick={handleClick}
+        >
+          Go To KILL.
+        </S.Button>
+      </S.SignInDiv>
+    </Layout>
   );
 }
 

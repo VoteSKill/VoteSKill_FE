@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import * as S from 'pages/WaitingRoom/Waiting.Style';
+import React from 'react';
+import * as S from 'pages/WaitingRoom/PlayerList/PlayList.style';
 
-function IdList() {
+function PlayerList() {
   const Items = ['병국', '석준', '정인', '채영', '종명', '종호', '아무개', '유유'];
 
   return (
@@ -26,4 +26,4 @@ function IdList() {
   );
 }
 
-export default IdList;
+export default PlayerList;
