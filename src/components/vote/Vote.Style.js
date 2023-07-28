@@ -38,12 +38,11 @@ export const ModalBody = styled.div`
   // 낮 알림 모달
   background: linear-gradient(to top, ${theme.night.start}, ${theme.night.end} 80%);
   text-align: center;
-
   min-width: 700px;
   max-width: 800px;
   min-height: 400px;
   max-height: 500px;
-  border-radius: ${(props) => props.theme.borderRadius.s};
+  /* border-radius: ${(props) => props.theme.borderRadius.s}; */
   padding: 10px;
 `;
 

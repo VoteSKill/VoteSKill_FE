@@ -17,20 +17,20 @@ export const ModalBackground = styled.div`
 `;
 
 export const ModalBody = styled.div`
-  background-color: ${theme.color.gray};
   text-align: center;
-
   min-width: 700px;
   max-width: 800px;
   min-height: 400px;
   max-height: 500px;
   border-radius: ${(props) => props.theme.borderRadius.s};
-  padding: 10px;
+  overflow: hidden;
+  position: relative;
+  z-index: 100;
 `;
 
-export const ModalExitButton = styled.div`
-  width: 100%;
-  height: 40px;
-  display: flex;
-  justify-content: end;
+export const ModalExitButton = styled.button`
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  z-index: 101;
 `;

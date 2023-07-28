@@ -9,9 +9,7 @@ function Vote() {
         <S.VoteImage src={process.env.PUBLIC_URL + '/image/game/killvote.png'}></S.VoteImage>
         <S.VoteComment>마피아는 누구일까요?</S.VoteComment>
         <S.VoteWrapper>
-          <S.VoteCheckBox>
-            
-          </S.VoteCheckBox>
+          <S.VoteCheckBox></S.VoteCheckBox>
         </S.VoteWrapper>
       </S.ModalBody>
     </div>

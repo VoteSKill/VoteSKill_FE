@@ -8,14 +8,16 @@ function Modal({ children }) {
   return (
     <>
       {modalToggleState && (
-        <S.ModalBackground>
-          <S.ModalBody>
-            <S.ModalExitButton>
-              <FiXCircle size={30} color="#970000" onClick={closeModal} cursor={'pointer'} />
-            </S.ModalExitButton>
-            {children}
-          </S.ModalBody>
-        </S.ModalBackground>
+        <>
+          <S.ModalBackground>
+            <S.ModalBody>
+              <S.ModalExitButton>
+                <FiXCircle size={30} color="#970000" onClick={closeModal} cursor={'pointer'} />
+              </S.ModalExitButton>
+              {children}
+            </S.ModalBody>
+          </S.ModalBackground>
+        </>
       )}
     </>
   );
