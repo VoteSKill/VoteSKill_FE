@@ -5,12 +5,12 @@ import MakeRoomModal from 'components/makeroommodal/MakeRoomModal';
 import Modal from 'components/modal/Modal';
 
 function MakeRoom() {
-  const { openModal } = useModal();
+  const { openModal } = useModal('MakeRoomModal');
 
   return (
     <S.Bottom>
       <S.MakeRoomButton onClick={openModal}>방만들기 </S.MakeRoomButton>
-      <Modal>
+      <Modal id="MakeRoomModal">
         <MakeRoomModal />
       </Modal>
     </S.Bottom>

@@ -5,7 +5,7 @@ import UserInfo from 'components/userinfo/UserInfo';
 import Modal from 'components/modal/Modal';
 
 function Header() {
-  const { openModal } = useModal();
+  const { openModal } = useModal('UserInfo');
 
   // 로고 클릭시 이동
   // const navigate = useNavigate();
@@ -25,7 +25,7 @@ function Header() {
       <S.HeaderButtonList>
         <HiQuestionMarkCircle size={'70%'} color="#828282" />
         <HiOutlineUserCircle size={'70%'} color="#828282" onClick={openModal} />
-        <Modal>
+        <Modal id="UserInfo">
           <UserInfo />
         </Modal>
       </S.HeaderButtonList>
