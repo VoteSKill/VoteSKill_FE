@@ -120,16 +120,7 @@ function CamScreen() {
       {session === undefined ? (
         <div id="join">
           <div id="join-dialog" className="jumbotron vertical-center">
-            {/* <h1> Join a video session </h1> */}
             <form className="form-group" onSubmit={joinSession}>
-              {/* <p>
-                <label>Participant: </label>
-                <input className="form-control" type="text" id="userName" value={initUserData.myUserName} required />
-              </p>
-              <p>
-                <label> Session: </label>
-                <input className="form-control" type="text" id="sessionId" value={initUserData.mySessionId} required />
-              </p> */}
               <p className="text-center">
                 <JoinInput className="btn btn-lg btn-success" name="commit" type="submit" value="참가하기" />
               </p>
@@ -165,7 +156,6 @@ function CamScreen() {
 
 function UserVideoComponent(props) {
   const getNicknameTag = () => {
-    // Gets the nickName of the user
     return JSON.parse(props.streamManager.stream.connection.data).clientData;
   };
 

@@ -2,18 +2,13 @@ import styled from 'styled-components';
 import { theme } from 'styles/theme';
 
 export const CamScreen = styled.div`
-  background-color: blue;
-  width: 300px;
-  height: 250px;
-  left: 10%;
   border-radius: ${theme.borderRadius.l};
-  border: 5px solid black;
+
+  width: 100%;
+  height: 100%;
 `;
 
 export const CustomScreen = styled.video`
-  width: 300px;
-  height: 250px;
-  border: 5px solid black;
   border-radius: ${theme.borderRadius.s};
 `;
 

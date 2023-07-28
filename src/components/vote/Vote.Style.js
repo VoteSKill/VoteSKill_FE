@@ -1,6 +1,23 @@
 import { styled } from 'styled-components';
 import { theme } from '../../styles/theme';
 
+export const VoteImage = styled.img`
+  width: 200px;
+  height: 200px;
+`;
+
+export const VoteComment = styled.p`
+  font-size: x-large;
+  color: white;
+`;
+
+export const VoteWrapper = styled.div`
+  display: flex;
+  justify-content: space-between center;
+`;
+
+export const VoteCheckBox = styled.input``;
+
 export const ModalBackground = styled.div`
   height: 100vh;
   width: 100vw;
@@ -17,7 +34,9 @@ export const ModalBackground = styled.div`
 `;
 
 export const ModalBody = styled.div`
-  background-color: ${theme.color.gray};
+  //background-color: ${theme.color.lightgray};
+  // 낮 알림 모달
+  background: linear-gradient(to top, ${theme.night.start}, ${theme.night.end} 80%);
   text-align: center;
 
   min-width: 700px;

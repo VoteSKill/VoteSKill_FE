@@ -6,7 +6,7 @@ import CamScreen from './CamScreen';
 // 낮이면 -> background change
 // 밤이면  -> theme : night
 function GameRoom() {
-  const { setNight, setDay } = useDayChange();
+  const { setDay, setNight } = useDayChange();
 
   const handleSetNight = () => {
     setNight();
@@ -16,32 +16,20 @@ function GameRoom() {
     setDay();
   };
 
+  // setDay() -> 처음실행 / 그 다음부터 4분주기
+  // setNight() -> 3분후 실행 / 그다음부터 4분주기
+
+  const camScreenData = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }, { id: 6 }];
+
   return (
     <Layout isMain={false} $isNight={setDay()}>
       <Header />
       <S.ScreenWrapper>
-        <S.ScreenGroup>
-          <S.PreVideoArea>
+        {camScreenData.map((item2) => (
+          <S.PreVideoArea key={item2.id}>
             <CamScreen />
           </S.PreVideoArea>
-          <S.PreVideoArea>
-            <CamScreen />
-          </S.PreVideoArea>
-          <S.PreVideoArea>
-            <CamScreen />
-          </S.PreVideoArea>
-        </S.ScreenGroup>
-        <S.ScreenGroup>
-          <S.PreVideoArea>
-            <CamScreen />
-          </S.PreVideoArea>
-          <S.PreVideoArea>
-            <CamScreen />
-          </S.PreVideoArea>
-          <S.PreVideoArea>
-            <CamScreen />
-          </S.PreVideoArea>
-        </S.ScreenGroup>
+        ))}
       </S.ScreenWrapper>
     </Layout>
   );
