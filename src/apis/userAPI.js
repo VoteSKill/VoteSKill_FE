@@ -1,14 +1,12 @@
 import axiosInstance from 'apis';
 
 const userAPI = {
-  signup: (username) => axiosInstance.post('/users', username),
-
-  login: () => axiosInstance.get('/login'),
+  signup: (nickname) => axiosInstance.post('/users/sign-up', { nickname }),
 
   logout: () => axiosInstance.post('/out'),
 
   kakaoLogin: (code) =>
-    axiosInstance.get('/oauth/kakao', {
+    axiosInstance.get('/oauth/kakao/callback', {
       params: {
         code: code,
       },
