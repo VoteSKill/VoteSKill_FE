@@ -57,8 +57,10 @@ export const InputBar = styled.input`
   padding: 5px 10px;
   outline: none;
 `;
+
 export const RoomDiv = styled.div`
   font-size: 20px;
+  margin: 0 auto;
   color: #a164a1;
   font-family: 'Gasoek One', sans-serif;
 `;
@@ -98,4 +100,16 @@ export const CheckBox1 = styled.input`
     opacity: 1;
     transform: rotate(405deg);
   }
+`;
+
+// 체크박스 커스텀
+
+export const CheckboxLabel = styled.label`
+  padding: 1rem 1rem;
+  border-radius: 10rem;
+  /* background-color: white; */
+  font-size: 1.5rem;
+
+  color: red;
+  font-family: 'Gasoek One', sans-serif;
 `;
