@@ -12,55 +12,42 @@ link.href = fontUrl;
 document.head.appendChild(link);
 
 export const SignInDiv = styled.div`
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: end;
+  padding-bottom: 10%;
   margin: auto;
-  /* margin-top: 50%; */
+  gap: 20px;
 `;
 
 export const NickName = styled.input`
-  width: 40rem;
-  height: 6vh;
-  margin: auto;
+  width: 25%;
+  height: 50px;
   font-size: 2em;
   text-align: center;
   background: rgba(255, 255, 255, 0.8);
-  background-image: radial-gradient(at 50% 50%, hsla(17, 62%, 65%, 1) 0px, transparent 50%);
-  /* radial-gradient(at 9% 32%, hsla(222, 75%, 60%, 1) 0px, transparent 50%); */
-  border: none;
-  border-radius: 3px;
-  position: absolute;
-  top: 70%;
-  left: 38%;
+  margin: 0 auto;
+  border-radius: 10px;
   font-family: 'Dokdo', cursive;
-  box-shadow: 2px 2px 8px 1px red;
-`;
-export const Container = styled.div`
-  font-size: 20px;
-  font-weight: bold;
-  font-family: 'Shrikhand';
-  background-color: red;
+  box-shadow: 0px 2px 5px 1px ${({ theme }) => theme.color.red};
 `;
 
 export const Button = styled.button`
-  width: 16rem;
-  height: 7vh;
+  width: 25%;
+  height: 50px;
   margin: 0 auto;
-  color: tomato;
-  font-size: 2em;
+  color: ${({ theme, $grow }) => ($grow ? theme.color.red : theme.color.darkgray)};
+  font-size: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 2px solid #bf4f74;
-  border-radius: 15px;
-  box-shadow: 3px 2px 2px 2px red;
-
-  &.grow {
-    background-color: ${({ theme }) => theme.color.red};
-  }
-  position: absolute;
-  top: 80%;
-  left: 46%;
+  border-radius: 10px;
+  box-shadow: ${({ $grow }) => ($grow ? 'null' : '0px 2px 5px 1px black')};
+  /* background-color: ${({ $grow }) => ($grow ? 'rgba(151, 0, 0, 1)' : 'rgba(151, 0, 0, 0.9)')}; */
+  background-color: ${({ theme, $grow }) => ($grow ? theme.color.darkgray : theme.color.red)};
   font-family: 'Dokdo', cursive;
+  transition: all ease 0.3s 0s;
 `;

@@ -8,5 +8,6 @@ export const KakaoLoginButton = styled.button`
   height: 50px;
   position: absolute;
   top: 75%;
-  left: 44%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `;

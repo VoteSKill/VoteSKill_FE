@@ -21,9 +21,9 @@ export const BackgroundImage = styled.img`
 
 export const MainLogo = styled.img`
   position: absolute;
-  width: 500px;
-  height: 210px;
-  top: 18%;
-  left: 35%;
+  width: 400px;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   filter: drop-shadow(1px 2px 10px #000);
 `;

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Layout from 'components/layout/Layout';
 import * as S from 'pages/SignIn/SignIn.Style';
-import axios from 'axios';
+import userAPI from 'apis/userAPI';
 
 function SignIn() {
   const [placeholder, setPlaceholder] = useState('닉네임을 입력하세요.');
@@ -29,25 +29,26 @@ function SignIn() {
     setNickName(event.target.value);
   };
 
-  const handleClick = () => {
-    if (nickName.trim() === '') {
-      // 조건추가필요 ( 닉네임 중복 여부)
-      alert('닉네임을 입력하세요. alert창디자인@');
-    } else {
-      // // 닉네임 백엔드로 보내기
-      // axios
-      // .post('http://localhost:8000/users/check', { username: nickName })
-      //   .then((response) => {
-      //     // 요청이 성공한 경우에 실행되는 부분
-      //     console.log(response.data);
-      //     window.location.href = 'lobby';
-      //   })
-      // .catch((error) => {
-      //     // 요청이 실패한 경우에 실행되는 부분
-      //     console.error(error);
-      // alert(error)
-      //   });
-      window.location.href = 'lobby';
+  const validateNickName = (nickName) => {
+    const nickNameLength = nickName.trim().length;
+    if (nickNameLength === 0) {
+      alert('닉네임을 입력하세요');
+      return false;
+    } else if (nickNameLength < 3 || nickNameLength > 6) {
+      alert('닉네임은 3자 이상 6자 이하압니다.');
+      return false;
+    }
+    return true;
+  };
+
+  const handleClick = async () => {
+    if (validateNickName(nickName)) {
+      const { data } = await userAPI.signup(nickName);
+      if (data.status === 200) {
+        location.replace('/lobby');
+      } else if (data.status === 400) {
+        alert('중복된 닉네임입니다.');
+      }
     }
   };
 
@@ -60,15 +61,8 @@ function SignIn() {
           onBlur={handleBlur}
           onChange={handleNickNameChange}
         ></S.NickName>
-        <br />
-        <S.Button
-          type="submit"
-          className={isHovering ? 'grow' : ''}
-          onMouseOver={handleMouseOver}
-          onMouseOut={handleMouseOut}
-          onClick={handleClick}
-        >
-          Go To KILL.
+        <S.Button $grow={isHovering} onMouseOver={handleMouseOver} onMouseOut={handleMouseOut} onClick={handleClick}>
+          Go To KILL
         </S.Button>
       </S.SignInDiv>
     </Layout>
