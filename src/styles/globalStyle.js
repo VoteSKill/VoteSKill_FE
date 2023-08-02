@@ -12,7 +12,7 @@ const GlobalStyle = createGlobalStyle`
         font-size: 62.5%;
     }
     body {
-        /* background-color: ${theme.color.darkgray}; */
+        overflow-x: hidden;
         font-size: 1.6rem;
         font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Open Sans', 'Helvetica Neue', sans-serif;
         -webkit-font-smoothing: antialiased;

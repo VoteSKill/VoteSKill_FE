@@ -9,7 +9,9 @@ function Main() {
 
   return (
     <Layout isMain={true}>
-      <S.KakaoLoginButton onClick={loginKakao}></S.KakaoLoginButton>
+      <S.ButtonWrapper>
+        <S.KakaoLoginButton onClick={loginKakao}></S.KakaoLoginButton>
+      </S.ButtonWrapper>
     </Layout>
   );
 }

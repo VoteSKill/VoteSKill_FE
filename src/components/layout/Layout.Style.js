@@ -2,7 +2,9 @@ import styled from 'styled-components';
 
 export const Background = styled.div`
   width: 100vw;
+  min-width: 1080px;
   height: 100vh;
+  min-height: 600px;
   background: url(${process.env.PUBLIC_URL}/image/city_background.svg),
     linear-gradient(
       to top,
@@ -27,11 +29,15 @@ export const BackgroundImage = styled.img`
   bottom: 0;
 `;
 
-export const MainLogo = styled.img`
+export const MainLogoWrapper = styled.div`
+  min-width: 1080px;
   position: absolute;
+  top: 10%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+`;
+export const MainLogo = styled.img`
   width: 400px;
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   filter: drop-shadow(1px 2px 10px #000);
 `;
