@@ -53,7 +53,7 @@ function CamScreen() {
 
   const joinSession = async () => {
     const newOV = new OpenVidu();
-
+    console.log(newOV);
     newOV.enableProdMode();
 
     const newSession = newOV.initSession();
@@ -62,6 +62,7 @@ function CamScreen() {
     setSession(newSession);
 
     // 4. session에 connect하는 과정
+    console.log(newSession);
     getToken().then((token) => {
       newSession
         .connect(token, { clientData: initUserData.myUserName })
