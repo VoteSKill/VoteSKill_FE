@@ -1,5 +1,4 @@
 import GameRoom from 'pages/GameRoom/GameRoom';
-import GameRoomNight from 'pages/GameRoom/GameRoomNight';
 import KakaoLogin from 'pages/KakaoLogin/KakaoLogin';
 import Lobby from 'pages/Lobby/Lobby';
 import Main from 'pages/Main/Main';
@@ -18,7 +17,6 @@ function Router() {
         <Route path="/lobby" element={<Lobby />} />
         {/* <Route path="/room/:roomId" element={<Waiting />} /> */}
         <Route path="/game/:gameId" element={<GameRoom />} />
-        <Route path="/game/night/:gameId" element={<GameRoomNight />} />
         <Route path="/test" element={<TestPage />} />
         <Route path="/kakao/callback" element={<KakaoLogin />} />
         <Route path="/waitingroom" element={<WaitingRoom />} />

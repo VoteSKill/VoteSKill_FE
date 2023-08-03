@@ -6,11 +6,10 @@ const useLayoutChange = () => {
   const [layout, setLayout] = useRecoilState(layoutState);
 
   const setDay = useCallback(() => setLayout({ ...layout, Day: true }), [setLayout]);
-  const setNight = useCallback(() => setLayout({ ...layout, Day: false }), [setLayout]);
-  const setMafia = useCallback(() => setLayout({ ...layout, Mafia: true }), [setLayout]);
-  const setCitizen = useCallback(() => setLayout({ ...layout, Mafia: false }), [setLayout]);
+  const setMafia = useCallback(() => setLayout({ Day: false, Mafia: true }), [setLayout]);
+  const setCitizen = useCallback(() => setLayout({ Day: false, Mafia: false }), [setLayout]);
 
-  return { layout, setDay, setNight, setMafia, setCitizen };
+  return { layout, setDay, setMafia, setCitizen };
 };
 
 export default useLayoutChange;

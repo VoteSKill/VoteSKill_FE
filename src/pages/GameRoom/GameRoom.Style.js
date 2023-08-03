@@ -21,6 +21,7 @@ export const TimeHeader = styled.div`
   text-align: center;
   font-size: 30px;
   font-weight: 600;
+  color: ${(props) => (props.layout.Day ? 'black' : 'white')};
 `;
 
 export const TimeIcon = styled.img`

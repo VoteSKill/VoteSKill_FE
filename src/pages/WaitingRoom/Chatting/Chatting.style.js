@@ -5,6 +5,7 @@ export const Chat = styled.div`
   display: flex;
   flex-direction: column;
   padding: 10px;
+  margin-right: 200px;
   gap: 20px;
 `;
 
