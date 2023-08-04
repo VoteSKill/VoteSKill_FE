@@ -6,22 +6,25 @@ import { setCookie } from 'utils/cookie';
 
 function KakaoLogin() {
   const navigate = useNavigate();
+
   const navigateUser = (data) => {
-    if (data.nickName === '') navigate('/signin');
-    else if (data.nickName.length > 0) location.replace('/lobby');
+    setCookie('accessToken ', data.ownJwtAccessToken);
+    if (data.user) {
+      setCookie('refreshToken ', data.ownJwtRefreshToken);
+      location.replace('/lobby');
+    } else {
+      navigate('/signin', { state: data.ownJwtAccessToken });
+    }
   };
 
   useEffect(() => {
     const getToken = async () => {
       const code = new URL(window.location.href).searchParams.get('code');
-      const { data, status } = await userAPI.kakaoLogin(code);
-      if (status !== 200) {
-        throw new Error('Login Error');
-      }
-      setCookie('accessToken ', data.ownJwtAccessToken);
-      setCookie('refreshToken ', data.ownJwtRefreshToken);
-      navigateUser(data);
+      const { data } = await userAPI.kakaoLogin(code);
+
+      if (data) navigateUser(data);
     };
+
     getToken();
   }, []);
 

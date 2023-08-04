@@ -1,12 +1,16 @@
 import { useState } from 'react';
+import { useLocation } from 'react-router';
 import Layout from 'components/layout/Layout';
-import * as S from 'pages/SignIn/SignIn.Style';
 import userAPI from 'apis/userAPI';
+import * as S from 'pages/SignIn/SignIn.Style';
 
 function SignIn() {
   const [placeholder, setPlaceholder] = useState('닉네임을 입력하세요.');
   const [isHovering, setIsHovering] = useState(false);
   const [nickName, setNickName] = useState('');
+
+  const signinToken = useLocation();
+  const token = signinToken.state;
 
   const handleFocus = () => {
     setPlaceholder('');
@@ -43,7 +47,8 @@ function SignIn() {
 
   const handleClick = async () => {
     if (validateNickName(nickName)) {
-      const { data } = await userAPI.signup(nickName);
+      const { data } = await userAPI.signup(nickName, token);
+      console.log(data);
       if (data.status === 200) {
         location.replace('/lobby');
       } else if (data.status === 400) {

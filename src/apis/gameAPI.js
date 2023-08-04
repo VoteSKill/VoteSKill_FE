@@ -1,4 +1,4 @@
-import axiosInstance from 'apis';
+import { axiosInstance } from 'apis';
 
 const gameAPI = {
   setRoom: (roomData) => axiosInstance.post('/rooms', roomData),
