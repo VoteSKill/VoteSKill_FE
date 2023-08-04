@@ -72,18 +72,18 @@ export const responseData = atom({
       roomLevel: ['중수'],
     },
     {
-      roomName: '마된다',
+      roomName: '된스다',
       roomId: 8,
       roomPassword: '',
       roomPersonCount: '1',
       roomLevel: ['중수', '고수'],
     },
     {
-      roomName: '마진짜',
+      roomName: '진마짜',
       roomId: 9,
       roomPassword: '',
       roomPersonCount: '2',
-      roomLevel: ['초보'],
+      roomLevel: ['중수'],
     },
   ],
 });

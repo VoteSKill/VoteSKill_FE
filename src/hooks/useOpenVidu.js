@@ -17,6 +17,7 @@ const useOpenVidu = () => {
   const [roomId, setRoomId] = useRecoilState(OVAtom.roomIdState);
   const [userName, setUserName] = useRecoilState(OVAtom.userNameState);
   const [messageList, setMessageList] = useState([]);
+  const [publisherSetting, setPublisherSetting] = useRecoilState(OVAtom.publisherState);
 
   const joinSession = useCallback(() => {
     const newOV = new OpenVidu();
@@ -37,7 +38,7 @@ const useOpenVidu = () => {
     });
     mySession.on('signal', (event) => {
       const message = event.data;
-      const nickname = event.from.data;
+      const nickname = JSON.parse(event.from.data).clientData;
       setMessageList((messageList) => [...messageList, { message, nickname }]);
     });
     setOV(newOV);
@@ -50,16 +51,7 @@ const useOpenVidu = () => {
       try {
         await session.connect(token, { clientData: userName });
 
-        let publisher = await OV.initPublisherAsync(undefined, {
-          audioSource: undefined,
-          videoSource: undefined,
-          publishAudio: true,
-          publishVideo: true,
-          resolution: '200x200',
-          frameRate: 60,
-          insertMode: 'APPEND',
-          mirror: false,
-        });
+        let publisher = await OV.initPublisherAsync(undefined, publisherSetting);
 
         session.publish(publisher);
 
@@ -101,9 +93,7 @@ const useOpenVidu = () => {
     const response = await axios.post(
       process.env.REACT_APP_SERVER_URL + 'api/sessions/' + roomId + '/connections',
       {},
-      {
-        headers: { 'Content-Type': 'application/json' },
-      },
+      { headers: { 'Content-Type': 'application/json' } },
     );
     return response.data; // The token
   };
@@ -119,7 +109,7 @@ const useOpenVidu = () => {
         console.log('Message successfully sent');
       })
       .catch((error) => {
-        console.error(error);
+        alert('메세지 전송에 실패했습니다.');
       });
   };
 
@@ -177,6 +167,7 @@ const useOpenVidu = () => {
     handleMainVideoStream,
     sendMessage,
     messageList,
+    setPublisherSetting,
   };
 };
 export default useOpenVidu;

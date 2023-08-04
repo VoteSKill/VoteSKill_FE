@@ -5,30 +5,26 @@ import { responseData } from 'recoil/atoms/lobbyState';
 import useModal from 'hooks/useModal';
 import Modal from 'components/modal/Modal';
 import PasswordModal from 'components/passwordmodal/PasswordModal';
+import { colors } from '@mui/material';
 
 function SearchMakeRoom() {
   // 데이터 불러오기
   const allData = useRecoilValue(responseData);
   const roomPasswords = allData.map((item) => item.roomPassword);
-  const roomLevels = allData.map((item) => item.roomLevel);
 
   // 체크박스 상태관리
   const checkLists = ['초보', '중수', '고수'];
-  const [isChecked, setIsChecked] = useState(false);
-  const [checkedItems, setCheckedItems] = useState(new Set());
-  const checkItemHandler = (id, isChecked) => {
-    setCheckedItems(checkedItems);
-    if (isChecked) {
-      checkedItems.add(checkLists[id]);
-      console.log(checkedItems);
-    } else if (!isChecked) {
-      checkedItems.delete(checkLists[id]);
-      console.log(checkedItems);
+  const [nameSearch, setNameSearch] = useState('');
+  const [checkedLevels, setCheckedLevels] = useState([]);
+
+  const checkHandled = (e) => {
+    const level = e.target.id;
+    console.log(e.target.id);
+    if (e.target.checked) {
+      setCheckedLevels((prev) => [...prev, level]);
+    } else {
+      setCheckedLevels((prev) => prev.filter((item) => item !== level));
     }
-  };
-  const checkHandled = ({ target }) => {
-    setIsChecked(!isChecked);
-    checkItemHandler(target.id, target.checked);
   };
 
   // 방 필터링하기
@@ -53,25 +49,32 @@ function SearchMakeRoom() {
   };
 
   // 원하는 방 제목 입력했을 때 방 필터링
-  const filterRooms = (inputRoomName) => {
+  const filterRooms = (nameSearch) => {
     // 입력하는 글자 포함하면 필터링 됨
-    const filteredRooms = allData.filter((item) => item.roomName.includes(inputRoomName));
+    const filteredRooms = allData.filter((item) => item.roomName.includes(nameSearch));
+    if (!nameSearch) {
+      return allData;
+    }
     setFilteredRooms(filteredRooms);
   };
-  const saveRoomName = (event) => {
-    filterRooms(event.target.value); // 입력된 방 이름으로 방 목록을 필터링
-  };
 
-  // 원하는 레벨 입력했을 때 방 필터링
+  // 원하는 레벨 체크했을 때 방 필터링
 
-  const filterLevel = () => {
-    console.log(checkedItems);
-    const filterLevels = roomLevels.filter((item) => item.includes(roomLevels));
+  const filterLevels = (filteredData) => {
+    if (checkedLevels.length === 0) {
+      return filteredData;
+    }
+    const filterLevels = filteredData.filter((item) => item.roomLevel.some((level) => checkedLevels.includes(level)));
     setfilteredLevel(filterLevels);
+    return filterLevels;
   };
-  const saveRoomLevel = (event) => {
-    filterLevel(event.target.value); // 입력된 방 이름으로 방 목록을 필터링
-  };
+
+  useEffect(() => {
+    const filteredData = filterLevels(filterRooms());
+
+    // filterRooms(filterLevels());
+    setFilteredRooms(filteredData);
+  }, [nameSearch, checkedLevels]);
 
   return (
     <>
@@ -82,7 +85,7 @@ function SearchMakeRoom() {
             type="search" // 치고 지우고 싶을 때 x표시
             autoComplete="off" //자동완성
             required
-            onChange={saveRoomName}
+            onChange={(e) => filterRooms(e.target.value)}
           />
         </S.SearchBarWrapper>
         <div style={{ lineHeight: '30%' }}>
@@ -94,12 +97,12 @@ function SearchMakeRoom() {
 
       {/* <br /> */}
       {checkLists.map((item, index) => (
-        <S.CheckBoxWrapper key={index}>
-          <S.CheckBoxInput type="checkbox" id={index} name="level" onChange={(e) => checkHandled(e)} />
-          <S.CheckboxLabel htmlFor={index} onClick={(e) => saveRoomLevel(e)}>
+        <S.CheckBoxWrapper key={item}>
+          <S.CheckBoxInput type="checkbox" id={item} name="level" onChange={(e, item) => checkHandled(e, item)} />
+          <S.CheckboxLabel htmlFor={item} onClick={(item) => checkHandled(item)}>
             {item}
           </S.CheckboxLabel>
-          &nbsp;
+          &nbsp;{/* 띄어쓰기 */}
         </S.CheckBoxWrapper>
       ))}
       <div style={{ lineHeight: '100%' }}>

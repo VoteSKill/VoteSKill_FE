@@ -23,12 +23,15 @@ function TestPage() {
       {session ? (
         <Testbody>
           <UserVideoComponent streamManager={mainStreamManager} />
-          {subscribers.map((sub, idx) => (
-            <div key={idx} className="stream-container col-md-6 col-xs-6">
-              <span>{sub.id}</span>
-              <UserVideoComponent streamManager={sub} />
-            </div>
-          ))}
+          {subscribers &&
+            subscribers.map((sub, idx) => {
+              return (
+                <div key={idx} className="stream-container col-md-6 col-xs-6">
+                  <span>{sub.id}</span>
+                  <UserVideoComponent streamManager={sub} />
+                </div>
+              );
+            })}
           <div>
             <div>
               {messageList.map((item, idx) => (
@@ -77,6 +80,7 @@ export function OpenViduVideoComponent({ streamManager }) {
 
   useEffect(() => {
     if (streamManager && videoRef.current) {
+      console.log(streamManager.stream.connection.data, ': ', streamManager);
       streamManager.addVideoElement(videoRef.current);
     }
   }, [streamManager]);
