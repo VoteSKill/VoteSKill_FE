@@ -15,11 +15,10 @@ function Router() {
         <Route path="/" element={<Main />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/lobby" element={<Lobby />} />
-        {/* <Route path="/room/:roomId" element={<Waiting />} /> */}
         <Route path="/game/:gameId" element={<GameRoom />} />
         <Route path="/test" element={<TestPage />} />
         <Route path="/kakao/callback" element={<KakaoLogin />} />
-        <Route path="/waitingroom" element={<WaitingRoom />} />
+        <Route path="/waitingroom/:sessionId" element={<WaitingRoom />} />
       </Routes>
     </BrowserRouter>
   );

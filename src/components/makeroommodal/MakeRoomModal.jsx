@@ -3,10 +3,14 @@ import { useState } from 'react';
 import { Switch } from '@mui/material';
 import gameAPI from 'apis/gameAPI';
 import useInput from 'hooks/useInput';
+import { useNavigate } from 'react-router';
+import { async } from 'q';
 function MakeRoomModal() {
   const [customSessionId, setCustomSessionId, customSessionIdHandler] = useInput('');
   const [password, setPassword, passwordHandler] = useInput('');
   const [boxChecked, setboxChecked] = useState(false);
+
+  const navigate = useNavigate();
 
   const makeRoomPost = async () => {
     const requestData = {
@@ -14,8 +18,12 @@ function MakeRoomModal() {
       password,
       admitNumber: 6,
     };
-    const response = await gameAPI.setRoom(requestData);
-    console.log(response);
+    const { data } = await gameAPI.setRoom(requestData);
+    enterWaitingRoom(data.room.name);
+  };
+
+  const enterWaitingRoom = async (sessionId) => {
+    navigate(`/waitingroom/${sessionId}`);
   };
 
   const handleBoxChecked = () => {
