@@ -1,72 +1,82 @@
-import Modal from 'components/modal/Modal';
+import userAPI from 'apis/userAPI';
+import { BiEdit, BiCheckCircle } from 'react-icons/bi';
 import * as S from 'components/userinfo/UserInfo.Style';
-import React, { useState, useEffect } from 'react';
+import useInput from 'hooks/useInput';
+import React, { useState, useEffect, useRef } from 'react';
+import { removeCookie } from 'utils/cookie';
 
-function UserInfo() {
+function UserInfo({ nickname }) {
+  const [isMyPage, setIsMyPage] = useState(false);
+
+  useEffect(() => {
+    if (nickname === sessionStorage.getItem('nickname')) {
+      setIsMyPage(true);
+    }
+  }, []);
+
+  const logout = async () => {
+    const { data } = userAPI.logout();
+    if (data.status === 200) {
+      sessionStorage.removeItem('nickname');
+      removeCookie('refreshToken');
+      removeCookie('accessToken');
+      location.reload('/');
+    }
+  };
+
   return (
-    <div>
-      <S.UserInfoBackground>
-        <S.Profile src={process.env.PUBLIC_URL + '/image/userinfo/Profile.svg'} alt="Profile" />
-        <S.InputArea>
-          <NickName></NickName>
-          <WinRate></WinRate>
-        </S.InputArea>
-      </S.UserInfoBackground>
-    </div>
+    <S.UserInfoBackground>
+      <S.Profile src={process.env.PUBLIC_URL + '/image/userinfo/Profile.svg'} alt="Profile" />
+      <S.InputArea>
+        <NickName nickname={nickname} />
+        <WinRate nickname={nickname}></WinRate>
+      </S.InputArea>
+    </S.UserInfoBackground>
   );
 }
 
 // Parent
-function NickName() {
-  const [nickname, setNickname] = useState('튀튀');
+function NickName({ nickname }) {
+  const [inputNickname, setInputNickname, handleInputNickname] = useInput(nickname);
   const [update, setUpdate] = useState(false);
+  const inputRef = useRef();
 
-  useEffect(() => {
-    // 백엔드 닉네임 불러옴
-    setNickname('어몽어스');
-  }, []);
+  const toggleUpdate = () => {
+    setUpdate(!update);
+  };
 
-  // input 활성화
-  const onUpdateClick = () => {
-    if (update) {
-      setUpdate(false);
+  const editNickname = async () => {
+    const { data } = userAPI.editUserInfo(inputNickname);
+    if (data && data.status === 200) {
+      toggleUpdate();
     } else {
-      setUpdate(true);
+      alert('중복된 닉네임입니다.');
+      return;
     }
   };
 
-  const onChange = (event) => {
-    // input 값 가져오기, state값 수정
-    setNickname(event.target.value);
-    // 백엔드 전송
-  };
+  useEffect(() => {
+    inputRef.current && inputRef.current.focus();
+  }, [update]);
 
   return (
-    <div>
+    <S.Wrapper>
       <S.Label>닉네임 : </S.Label>
       {update ? (
-        <S.NicknameInput onChange={onChange} value={nickname}></S.NicknameInput>
+        <S.NicknameInput ref={inputRef} onChange={handleInputNickname} value={inputNickname}></S.NicknameInput>
       ) : (
-        <S.NicknameSpan>{nickname}</S.NicknameSpan>
+        <S.NicknameSpan>{inputNickname}</S.NicknameSpan>
       )}
-      <NickNameUpdate onUpdateClick={onUpdateClick}></NickNameUpdate>
-    </div>
+      {update ? (
+        <BiCheckCircle size={'32px'} onClick={editNickname} />
+      ) : (
+        <BiEdit size={'32px'} onClick={toggleUpdate} />
+      )}
+    </S.Wrapper>
   );
 }
 
-// Child
-function NickNameUpdate({ onUpdateClick }) {
-  return (
-    <S.NicknameFixIcon
-      onClick={() => {
-        onUpdateClick();
-      }}
-    ></S.NicknameFixIcon>
-  );
-}
-
-function WinRate() {
-  // 백엔드에서 승, 패 정보 받기
+function WinRate({ nickname }) {
   const [rank, setRank] = useState('unrated');
   const [rate, setRate] = useState({ win: 0, lose: 0, rate: 0.0 });
 
@@ -82,16 +92,23 @@ function WinRate() {
     }
   };
   useEffect(() => {
-    // 백엔드로 부터 승, 패 받아오기
     setRate({ win: 70, lose: 30, rate: Math.round((70 / (70 + 30)) * 100) });
   }, []);
+
+  // useEffect(() => {
+  //   const fetchUserInfoData = async () => {
+  //     const { data } = await userAPI.getUserInfo(nickname);
+  //     setRate({ ...rate, win: data.win, lose: data.lose });
+  //   };
+  //   fetchUserInfoData();
+  // }, []);
 
   useEffect(() => {
     winRateRank(rate.rate);
   }, [rate]);
 
   return (
-    <div>
+    <S.Wrapper>
       <S.Label>승률 : </S.Label>
       <S.WinRateSpan>
         {rate.win + rate.lose}전 {rate.win}승 {rate.lose}패
@@ -100,7 +117,7 @@ function WinRate() {
       {rank === '초보' && <S.BeginnerIcon>{rank}</S.BeginnerIcon>}
       {rank === '중수' && <S.ImmediateIcon>{rank}</S.ImmediateIcon>}
       {rank === '고수' && <S.ExpertIcon>{rank}</S.ExpertIcon>}
-    </div>
+    </S.Wrapper>
   );
 }
 
