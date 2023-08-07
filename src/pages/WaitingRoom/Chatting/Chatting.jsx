@@ -28,15 +28,20 @@ function Chatting({ messageList, sendMessage }) {
     <S.Chat>
       <S.ChattingContainer>
         {messageList.map((msg, idx) => (
-          <S.ChattingDivider key={idx} $mymessage={msg.nickname == 'test3'}>
-            <S.MessageBox $mymessage={msg.nickname == 'test3'}>{msg.message}</S.MessageBox>
+          <S.ChattingDivider key={idx} $mymessage={msg.nickname == '유저닉네임'}>
+            <S.ChatBubble $mymessage={msg.nickname == '유저닉네임'}>
+              <S.ChatNickname>{msg.nickname}</S.ChatNickname>
+              <S.MessageBox $mymessage={msg.nickname == '유저닉네임'}>
+                <S.ChatMessage>{msg.message}</S.ChatMessage>
+              </S.MessageBox>
+            </S.ChatBubble>
           </S.ChattingDivider>
         ))}
         <div ref={messageEndRef}></div>
       </S.ChattingContainer>
       <S.BottomBar>
         <S.InputBar
-          placeholder="메세지를 입력하세요"
+          placeholder="메세지를 입력하세요."
           onChange={handleInputMessage}
           value={inputMessage.message}
           onKeyDown={handleOnKeyPress}
