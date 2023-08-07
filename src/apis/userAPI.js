@@ -6,7 +6,7 @@ const userAPI = {
   logout: () => axiosInstance.post('/out'),
 
   kakaoLogin: (code) =>
-    loginInstance.get('/oauth/kakao/callback', {
+    loginInstance.get('/oauth', {
       params: {
         code: code,
       },
