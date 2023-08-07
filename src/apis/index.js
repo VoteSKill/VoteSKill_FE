@@ -9,8 +9,9 @@ export const axiosInstance = axios.create({
   },
 });
 export const loginInstance = axios.create({
-  baseURL: process.env.REACT_APP_SERVER_URL,
+  baseURL: process.env.REACT_APP_AUTH_SERVER_URL,
   headers: {
     'Content-Type': 'application/json',
+    Authorization: `Bearer ${getCookie('accessToken')}`,
   },
 });
