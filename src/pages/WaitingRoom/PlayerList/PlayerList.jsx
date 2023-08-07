@@ -3,7 +3,10 @@ import * as S from 'pages/WaitingRoom/PlayerList/PlayList.style';
 import useModal from 'hooks/useModal';
 import UserInfo from 'components/userinfo/UserInfo';
 import axios from 'axios';
+import SearchMakeRoom from 'pages/Lobby/SearchMakeRoom/SearchMakeRoom';
 function PlayerList() {
+  // 유저네임받아와야함
+  // const [myName, setmyName] = useState('');
   const Items = ['병국', '석준', '정인', '채영', '종명', '종호'];
   // 인덱스를 먼저 찾아,, 그리고 인덱스에 해당하는 유저 정보 가져올 수 있도록
   const Master = '병국';
@@ -12,21 +15,24 @@ function PlayerList() {
   const [currentUsername, setcurrentUsername] = useState(Master);
 
   const { openModal: openUserInfo } = useModal('UserInfo');
-  const [myName, setmyName] = useState('');
 
   // 강퇴 버튼
   const removeItem = (item) => {
-    console.log(Master, '마스터');
-    console.log(currentUsername, '현재유저');
-
     // console.log(`${item} 삭제`);
-    if (Master === '병국') {
-      const newuserIdx = userIdx.filter((data) => {
-        console.log(data);
-        return data !== item;
-      });
-      setUserIdx(newuserIdx);
-    }
+    // if (Master === '병국') {
+    //   axios
+    //   .delete(`http://localhost:8000/room/${item.name}/${item}`, {data: { username: item }})
+    //   .then((response) => {
+    //     console.log(response.data);
+    //   })
+    //   .catch((error) => {
+    //     console.error(error);
+    //   });
+    const newuserIdx = userIdx.filter((data) => {
+      console.log(data);
+      return data !== item;
+    });
+    setUserIdx(newuserIdx);
   };
   // 나가기 버튼
   const roomOut = () => {
