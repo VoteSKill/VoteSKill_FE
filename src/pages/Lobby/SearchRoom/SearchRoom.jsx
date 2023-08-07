@@ -4,12 +4,11 @@ import { roomLists } from 'pages/Lobby/RoomList/RoomList';
 import { constSelector } from 'recoil';
 import useModal from 'hooks/useModal';
 import Modal from 'components/modal/Modal';
-import { QueryClient, QueryClientProvider, useQuery, queryKey, queryFn } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
 import axios from 'axios';
 import { axiosInstance } from 'apis';
 import gameAPI from 'apis/gameAPI';
 import SearchMakeRoom from '../SearchMakeRoom/SearchMakeRoom';
+import { useQuery } from '@tanstack/react-query';
 
 // 필터링 한 목록을 전달할거임.
 function SearchRoom() {
@@ -38,7 +37,6 @@ function SearchRoom() {
   // queryFn: () => axios.post('http://localhost:8080/rooms'),
   // update: (data) => axios.post('http://localhost:8000/rooms', data), //update 시킬 함수 추가
   // });
-  const queryClient = new QueryClient();
   // 체크박스 상태관리
   // 체크박스 상태관리
   const checkLists = ['초보', '중수', '고수'];
