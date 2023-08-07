@@ -18,9 +18,9 @@ export const ModalBackground = styled.div`
 export const ModalBody = styled.div`
   text-align: center;
   min-width: 700px;
-  max-width: 1064px;
+  /* max-width: 1064px; */
   min-height: 400px;
-  max-height: 618px;
+  /* max-height: 618px; */
   border-radius: ${(props) => props.theme.borderRadius.s};
   overflow: hidden;
   position: relative;

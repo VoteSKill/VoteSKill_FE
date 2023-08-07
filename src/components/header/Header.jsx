@@ -4,23 +4,16 @@ import { HiQuestionMarkCircle, HiOutlineUserCircle } from 'react-icons/hi';
 import UserInfo from 'components/userinfo/UserInfo';
 import JobIntroduce from 'components/jobintroduce/JobIntroduce';
 import Modal from 'components/modal/Modal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function Header() {
+  const [nickname, setNickname] = useState('');
   const { openModal: openUserInfo } = useModal('UserInfo');
   const { openModal: openJobIntroduceModal } = useModal('JobIntroduce');
 
-  // 로고 클릭시 이동
-  // const navigate = useNavigate();
-
-  // const navigateTo = (props) => {
-  //   console.log(props.isSign);
-  //   if (props.isSign) {
-  //     navigate('/lobby');
-  //   } else {
-  //     navigate('/');
-  //   }
-  // };
+  useEffect(() => {
+    setNickname(sessionStorage.getItem('nickname'));
+  }, [nickname]);
 
   return (
     <S.HeaderWrapper>
@@ -29,7 +22,7 @@ function Header() {
         <HiQuestionMarkCircle size={'70%'} color="#828282" onClick={openJobIntroduceModal} />
         <HiOutlineUserCircle size={'70%'} color="#828282" onClick={openUserInfo} />
         <Modal id="UserInfo">
-          <UserInfo />
+          <UserInfo nickname={nickname} />
         </Modal>
         <Modal id="JobIntroduce">
           <JobIntroduce />

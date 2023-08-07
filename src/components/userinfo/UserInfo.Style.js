@@ -1,50 +1,54 @@
-import Modal, { ModalBackground, ModalBody } from 'components/modal/Modal.style';
 import { styled } from 'styled-components';
 import { theme } from '../../styles/theme';
 
-export const UserInfoBackground = styled(ModalBody)`
-  background-color: ${theme.color.darkgray};
+export const UserInfoBackground = styled.div`
   width: 100%;
   height: 100%;
+  background-color: ${theme.color.darkgray};
+  padding: 50px;
   display: flex;
-  flex: 1 3;
+  justify-content: center;
   align-items: center;
+  gap: 10px;
 `;
 
 export const Profile = styled.img`
   width: 200px;
   height: 170px;
   border-radius: 20px;
-  margin: 5px;
 `;
 export const InputArea = styled.div`
   background: black;
-  height: 100%;
-  padding: 20px 5px 20px 20px;
-  margin: 10px;
-  font-size: 32px;
+  height: 170px;
+  font-size: 30px;
   color: white;
-  border-radius: 20px;
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 `;
 
-export const Label = styled.label`
+export const Wrapper = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   padding: 5px;
 `;
 
-export const NicknameSpan = styled.span`
-  display: inline-block;
+export const Label = styled.label``;
+
+export const NicknameSpan = styled.div`
+  text-align: start;
   width: 250px;
-  height: 55.33px;
-  padding: 9px 3px 9px 3px;
-  margin: 6px;
+  height: 100%;
 `;
 
 export const NicknameInput = styled.input`
-  display: inline;
-  height: 55.33px;
+  height: 100%;
   width: 250px;
-  padding: 9px 3px 9px 3px;
-  margin: 6px;
 `;
 
 export const NicknameFixIcon = styled.button`
