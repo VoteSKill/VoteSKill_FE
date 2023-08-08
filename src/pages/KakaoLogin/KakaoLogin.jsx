@@ -1,7 +1,6 @@
 import userAPI from 'apis/userAPI';
 import Layout from 'components/layout/Layout';
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { setCookie } from 'utils/cookie';
 
 function KakaoLogin() {

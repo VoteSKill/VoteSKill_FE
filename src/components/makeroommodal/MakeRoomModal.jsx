@@ -4,7 +4,7 @@ import { Switch } from '@mui/material';
 import gameAPI from 'apis/gameAPI';
 import useInput from 'hooks/useInput';
 import { useNavigate } from 'react-router';
-import { async } from 'q';
+
 function MakeRoomModal() {
   const [customSessionId, setCustomSessionId, customSessionIdHandler] = useInput('');
   const [password, setPassword, passwordHandler] = useInput('');
