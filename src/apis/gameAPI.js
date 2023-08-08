@@ -6,7 +6,7 @@ const gameAPI = {
   enterRoom: (roomId, password) => axiosInstance.post(`/api/sessions/${roomId}/connections`, { password }),
 
   getRoomList: (title, grade, state) =>
-    axiosInstance.get('/rooms', {
+    axiosInstance.get('/api/sessions', {
       params: {
         title,
         grade,

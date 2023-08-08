@@ -6,9 +6,16 @@ import Header from 'components/header/Header';
 import { getRoomList } from 'recoil/atoms/lobbyState';
 import SearchRoom from './SearchRoom/SearchRoom';
 import RoomList from './RoomList/RoomList';
+import axios from 'axios';
+import gameAPI from 'apis/gameAPI';
 function Lobby() {
   useEffect(() => {
     getRoomList();
+    const fetchData = async () => {
+      const response = await gameAPI.getRoomList();
+      console.log(response);
+    };
+    fetchData();
   }, []);
 
   return (
