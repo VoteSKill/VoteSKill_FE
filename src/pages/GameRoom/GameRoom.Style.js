@@ -36,3 +36,11 @@ export const LeftTime = styled.div`
 export const DayText = styled.div`
   margin-top: 10px;
 `;
+
+export const VoteImageInput = styled.input``;
+
+export const VoteImage = styled.img`
+  width: 250px;
+  height: 250px;
+  position: fixed;
+`;

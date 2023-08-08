@@ -4,15 +4,11 @@ import useLayoutChange from 'hooks/useLayoutChange';
 import * as S from 'pages/GameRoom/GameRoom.Style';
 import CamScreen from './CamScreen';
 import { useEffect } from 'react';
-// 낮이면 -> background change
-// 밤이면  -> theme : night
+import { useState } from 'react';
 
 function GameRoom() {
   const { layout, setDay, setMafia, setCitizen } = useLayoutChange();
-
-  // setDay() -> 처음실행 / 그 다음부터 4분주기
-  // setNight() -> 3분후 실행 / 그다음부터 4분주기
-
+  const { isVote, setVote } = useState(false);
   useEffect(() => {
     // 백엔드 데이터 받아올수도? : 낮, 밤, 시간, 직업
     setDay();
@@ -28,8 +24,13 @@ function GameRoom() {
     }
   };
 
+  // 낮 -> 투표 -> 밤 -> 능력사용 : 반복
+
   const time = (layout) => {
     if (layout.Day) {
+      if (isVote) {
+        return ' 0:15';
+      }
       return ' 3:00';
     } else {
       return ' 1:00';
@@ -38,6 +39,9 @@ function GameRoom() {
 
   const comment = (layout) => {
     if (layout.Day) {
+      if (isVote) {
+        return '마피아로 생각되는 사람을 투표해주세요.';
+      }
       return '~번째 낮입니다.';
     } else {
       if (layout.Mafia) {
@@ -51,11 +55,12 @@ function GameRoom() {
   return (
     <Layout isMain={false} $layout={layout}>
       <Header />
+
       <SecondHeader layout={layout} imageUrl={imageUrl} time={time} comment={comment}></SecondHeader>
       <S.ScreenWrapper>
         {camScreenData.map((item2) => (
           <S.PreVideoArea key={item2.id}>
-            <CamScreen />
+            <CamScreen></CamScreen>
           </S.PreVideoArea>
         ))}
       </S.ScreenWrapper>
@@ -72,11 +77,5 @@ function SecondHeader({ layout, imageUrl, time, comment }) {
     </S.TimeHeader>
   );
 }
-
-// 직업정해주기
-// 낮 -> 밤 -> 낮 -> 밤 반복
-// 밤 -> 3분
-// 낮 회의시간 2분
-// 낮 -> 투표
 
 export default GameRoom;

@@ -17,3 +17,9 @@ export const JoinInput = styled.input`
   padding: 5px;
   font-size: large;
 `;
+
+export const VoteImage = styled.img`
+  width: 250px;
+  height: 250px;
+  position: fixed;
+`;

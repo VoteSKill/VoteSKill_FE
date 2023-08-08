@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { OpenVidu } from 'openvidu-browser';
 import axios from 'axios';
-import { CustomScreen, JoinInput } from './CamScreen.Style';
+import { CustomScreen, JoinInput, VoteImage } from './CamScreen.Style';
 import useOpenVidu from 'hooks/useOpenVidu';
 
 function CamScreen() {
@@ -72,7 +72,16 @@ function OpenViduVideoComponent(props) {
     }
   }, [props]);
 
-  return <CustomScreen autoPlay={true} ref={videoRef} />;
+  const ImageOn = () => {
+    return <VoteImage src={process.env.PUBLIC_URL + '/image/game/killvote.png'}></VoteImage>;
+  };
+
+  return (
+    <div>
+      <VoteImage src={process.env.PUBLIC_URL + '/image/game/killvote.png'}></VoteImage>
+      <CustomScreen autoPlay={true} ref={videoRef}></CustomScreen>
+    </div>
+  );
 }
 
 export default CamScreen;
