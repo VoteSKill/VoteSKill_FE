@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
-const useEventSource = (url) => {
+const useEventSource = (roomId, userId) => {
+  const url = process.env.REACT_APP_GAME_SERVER_URL + `/sse/enter/${roomId}/${userId}`;
   const [data, setData] = useState();
 
   useEffect(() => {
