@@ -11,8 +11,18 @@ import gameAPI from 'apis/gameAPI';
 function WaitingRoom() {
   const { sessionId } = useParams();
   const location = useLocation();
-  const { session, messageList, subscribers, sendMessage, setRoomId, setUserName, joinSession, setPassword } =
-    useOpenVidu();
+  const {
+    session,
+    messageList,
+    subscribers,
+    sendMessage,
+    setRoomId,
+    setUserName,
+    joinSession,
+    setPassword,
+    publisherSetting,
+    setPublisherSetting,
+  } = useOpenVidu();
 
   useEffect(() => {
     const nickname = sessionStorage.getItem('nickname');
@@ -20,6 +30,7 @@ function WaitingRoom() {
     setRoomId(sessionId);
     setUserName(nickname);
     setPassword(password);
+    setPublisherSetting({ ...publisherSetting, publishAudio: false, publishVideo: false });
     joinSession();
   }, [sessionId]);
 
