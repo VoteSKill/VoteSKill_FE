@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import * as S from 'pages/WaitingRoom/Chatting/Chatting.style';
 function Chatting({ messageList, sendMessage }) {
   const [inputMessage, setInputMessage] = useState({ message: '', nickname: 'testnickname' });
@@ -24,14 +24,19 @@ function Chatting({ messageList, sendMessage }) {
 
   const isEmptyMessage = () => inputMessage.message.length === 0;
 
+  const isMyMessage = useCallback((msg) => {
+    const nickname = sessionStorage.getItem('nickname');
+    return msg.nickname === nickname;
+  }, []);
+
   return (
     <S.Chat>
       <S.ChattingContainer>
         {messageList.map((msg, idx) => (
-          <S.ChattingDivider key={idx} $mymessage={msg.nickname == '유저닉네임'}>
-            <S.ChatBubble $mymessage={msg.nickname == '유저닉네임'}>
+          <S.ChattingDivider key={idx} $mymessage={isMyMessage}>
+            <S.ChatBubble $mymessage={isMyMessage}>
               <S.ChatNickname>{msg.nickname}</S.ChatNickname>
-              <S.MessageBox $mymessage={msg.nickname == '유저닉네임'}>
+              <S.MessageBox $mymessage={isMyMessage}>
                 <S.ChatMessage>{msg.message}</S.ChatMessage>
               </S.MessageBox>
             </S.ChatBubble>

@@ -6,6 +6,7 @@ import Layout from 'components/layout/Layout';
 import Header from 'components/header/Header';
 import useOpenVidu from 'hooks/useOpenVidu';
 import { useLocation, useParams } from 'react-router';
+import gameAPI from 'apis/gameAPI';
 
 function WaitingRoom() {
   const { sessionId } = useParams();
@@ -20,6 +21,8 @@ function WaitingRoom() {
     setUserName(nickname);
     setPassword(password);
     joinSession();
+
+    return gameAPI.exitRoom(sessionId);
   }, [sessionId]);
 
   return (
