@@ -8,13 +8,14 @@ import PasswordModal from 'components/passwordmodal/PasswordModal';
 import { colors } from '@mui/material';
 import axios from 'axios';
 import PlayerList from 'pages/WaitingRoom/PlayerList/PlayerList';
+import gameAPI from 'apis/gameAPI';
+import MakeRoomModal from 'components/makeroommodal/MakeRoomModal';
+import { useNavigate } from 'react-router';
+
 function RoomList() {
   // SearchRoom에서 받은 데이터 불러오기
-  // const allData = ({ data }) => {
-  //   console.log(data);
-  // };
   const allData = useRecoilValue(responseData);
-  const roomPasswords = allData.map((item) => item.password);
+  const navigate = useNavigate();
   // 체크박스 상태관리
 
   // 방 필터링하기
@@ -24,31 +25,27 @@ function RoomList() {
   // 비밀번호 여부
   const hasPassword = (item) => item.password !== '';
 
-  const checkPassword = (item, password) => {
-    axios
-      .post(`http://localhost:8000/rooms/${item.name}`, { password: password })
-      .then((response) => {
-        console.log(response.data);
-        window.location.href = `rooms/${item.name}`;
-      })
-      .catch((error) => {
-        alert(error);
-      });
-  };
   const handleItemClick = (item) => {
     const roomPassword = item.password;
-    const roomId = item.name;
+    const sessionId = item.name;
     setItem(item);
-    // setRoomNumber(selectedRoomId);
     if (roomPassword === '') {
       // 비밀번호가 없는 경우
-      checkPassword(item, roomPassword);
+      enterWaitingRoom(sessionId);
     } else {
       // 비밀번호가 있는 경우
       openModal();
     }
   };
 
+  const enterWaitingRoom = (sessionId) => {
+    navigate(`/waitingroom/${sessionId}`, {
+      state: {
+        password: '',
+      },
+    });
+  };
+  console.log(allData);
   return (
     <>
       {/* 방 목록 및 인원수, 잠금상태 */}
@@ -59,18 +56,10 @@ function RoomList() {
             onClick={() => {
               handleItemClick(item);
             }}
-            style={{
-              backgroundImage: 'linear-gradient(to top, red, yellow)',
-              border: '7px solid black',
-              borderRadius: '30px',
-              textAlign: 'center',
-              fontFamily: 'Dokdo',
-              fontSize: '25px',
-            }}
           >
             {item.name}
             <S.People style={{ textAlign: 'center' }}>
-              {item.people}/6 {item.password && <S.Logo src={process.env.PUBLIC_URL + '/lock_logo.png'} />}
+              {item.admitNumber}/6 {item.password && <S.Logo src={process.env.PUBLIC_URL + '/lock_logo.png'} />}
             </S.People>
           </S.RoomContainer>
         ))}

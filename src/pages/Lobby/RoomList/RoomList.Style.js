@@ -29,6 +29,12 @@ export const RoomContainer = styled.div`
   font-size: 20px;
   font-weight: bold;
   font-family: 'Bagel Fat One', cursive;
+  background-image: linear-gradient(to top, red, yellow);
+  border: 7px solid black;
+  border-radius: 30px;
+  text-align: center;
+  font-family: 'Dokdo';
+  font-size: 25px;
 `;
 
 export const People = styled.div``;
