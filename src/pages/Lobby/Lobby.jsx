@@ -1,22 +1,20 @@
 import { useRecoilState } from 'recoil';
-import React, { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import * as S from 'pages/Lobby/Lobby.Style';
 import MakeRoom from './MakeRoom/MakeRoom';
 import Layout from 'components/layout/Layout';
 import Header from 'components/header/Header';
-import { getRoomList, responseData } from 'recoil/atoms/lobbyState';
+import { responseData } from 'recoil/atoms/lobbyState';
 import SearchRoom from './SearchRoom/SearchRoom';
 import RoomList from './RoomList/RoomList';
-import axios from 'axios';
 import gameAPI from 'apis/gameAPI';
 
 function Lobby() {
   const [res, setRes] = useRecoilState(responseData);
   useEffect(() => {
     const fetchData = async () => {
-      const response = await gameAPI.getRoomList();
-      console.log(response.data, 'data');
-      setRes(response.data);
+      const { data } = await gameAPI.getRoomList();
+      setRes(data);
     };
     fetchData();
   }, []);

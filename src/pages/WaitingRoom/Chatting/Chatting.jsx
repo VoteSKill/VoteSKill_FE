@@ -33,10 +33,10 @@ function Chatting({ messageList, sendMessage }) {
     <S.Chat>
       <S.ChattingContainer>
         {messageList.map((msg, idx) => (
-          <S.ChattingDivider key={idx} $mymessage={isMyMessage}>
-            <S.ChatBubble $mymessage={isMyMessage}>
+          <S.ChattingDivider key={idx} $mymessage={isMyMessage(msg)}>
+            <S.ChatBubble $mymessage={isMyMessage(msg)}>
               <S.ChatNickname>{msg.nickname}</S.ChatNickname>
-              <S.MessageBox $mymessage={isMyMessage}>
+              <S.MessageBox $mymessage={isMyMessage(msg)}>
                 <S.ChatMessage>{msg.message}</S.ChatMessage>
               </S.MessageBox>
             </S.ChatBubble>
