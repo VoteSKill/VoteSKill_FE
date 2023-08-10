@@ -1,5 +1,6 @@
 import Header from 'components/header/Header';
 import Layout from 'components/layout/Layout';
+import Timer from 'components/timer/Timer';
 import useOpenVidu from 'hooks/useOpenVidu';
 import { useEffect, useRef, useState } from 'react';
 import { styled } from 'styled-components';
@@ -53,7 +54,9 @@ function TestPage() {
           </div>
         </Testbody>
       ) : (
-        <Button onClick={joinSession}>JOIN</Button>
+        <>
+          <Button onClick={joinSession}>JOIN</Button>
+        </>
       )}
     </Layout>
   );
