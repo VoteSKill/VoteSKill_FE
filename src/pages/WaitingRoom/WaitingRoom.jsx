@@ -31,10 +31,6 @@ function WaitingRoom() {
     setUserName(nickname);
     setPassword(password);
 
-    joinSession();
-  }, [sessionId]);
-
-
     setPublisherSetting({ ...publisherSetting, publishAudio: true, publishVideo: true });
     joinSession();
   }, [sessionId]);
