@@ -30,11 +30,17 @@ function WaitingRoom() {
     setRoomId(sessionId);
     setUserName(nickname);
     setPassword(password);
-    setPublisherSetting({ ...publisherSetting, publishAudio: false, publishVideo: false });
+
     joinSession();
   }, [sessionId]);
 
-  console.log(session);
+
+    setPublisherSetting({ ...publisherSetting, publishAudio: true, publishVideo: true });
+    joinSession();
+  }, [sessionId]);
+
+  console.log(sessionId);
+
   return (
     <Layout>
       <Header />

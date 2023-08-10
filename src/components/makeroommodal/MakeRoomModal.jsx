@@ -24,13 +24,16 @@ function MakeRoomModal() {
       admitNumber: 6,
     };
 
+
     try {
       const { data } = await gameAPI.setRoom(requestData);
-      enterWaitingRoom(data.name);
+      enterWaitingRoom(requestData.customSessionId);
+
     } catch (e) {
       console.log(e);
       alert('게임방 생성에 실패했습니다. 다시 신청해주세요.');
     }
+
   };
 
   const enterWaitingRoom = async (sessionId) => {

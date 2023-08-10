@@ -77,7 +77,7 @@ function PlayerList() {
       </S.Square>
       <S.ButtonSquare>
         <S.OutButton onClick={roomOut}>EXIT</S.OutButton>
-        <S.StartButton onClick={gameStart}>START</S.StartButton>
+        {currentUsername === Master && <S.StartButton onClick={gameStart}>START</S.StartButton>}
       </S.ButtonSquare>
     </S.PlayerListWrapper>
   );

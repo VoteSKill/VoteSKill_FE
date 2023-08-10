@@ -5,7 +5,6 @@ import * as S from 'pages/GameRoom/GameRoom.Style';
 import CamScreen from './CamScreen';
 import { useEffect } from 'react';
 import { useState } from 'react';
-
 import JobAssign from 'components/modal/JobAssign';
 import { useLocation } from 'react-router-dom';
 import useEventSource from 'hooks/useEventsource';
@@ -14,7 +13,6 @@ function GameRoom(props) {
   console.log(props);
   const { layout, setDay, setMafia, setCitizen } = useLayoutChange();
   const { isVote, setVote } = useState(false);
-
   const location = useLocation();
   const sessionId = location.state.sessionId;
   // const minutes = Math.floor(time / 60) >= 0 ? Math.floor(time / 60) : 0; // 분
@@ -24,16 +22,9 @@ function GameRoom(props) {
 
   //투표
 
-
-
   useEffect(() => {
     setDay();
-    roleData.startListening();
-    roomData.startListening();
-    return () => {
-      roleData.stopListening();
-      roomData.stopListening();
-    };
+    useEventSource();
   }, []);
 
   const imageUrl = (layout) => {
@@ -83,11 +74,8 @@ function GameRoom(props) {
       </S.ScreenWrapper>
       <button onClick={checkData}>확인</button>
       <div>
-        {JSON.stringify(roleData.data)}롤데이터
-        <br />
-        {JSON.stringify(roomData.data)}룸데이터
-        {/* {roomData && roomData.map((item, index) => <span key={index}>{item}</span>)}
-        {roleData && roleData.map((item, index) => <span key={index}>{item}</span>)} */}
+        {roomData && roomData.map((item, index) => <span key={index}>{item}</span>)}
+        {roleData && roleData.map((item, index) => <span key={index}>{item}</span>)}
       </div>
     </Layout>
   );
