@@ -35,8 +35,17 @@ const useOpenVidu = () => {
     });
 
     mySession.on('exception', (exception) => {
-      console.warn('exception:', exception);
+      console.warn('예외발생:', exception);
     });
+
+    mySession.on('reconnecting', (exception) => {
+      console.warn('다시 연결중:', exception);
+    });
+
+    mySession.on('reconnected', (exception) => {
+      console.warn('다시 연결됨:', exception);
+    });
+
     mySession.on('signal', (event) => {
       const message = event.data;
       const nickname = JSON.parse(event.from.data).clientData;
@@ -44,6 +53,7 @@ const useOpenVidu = () => {
     });
     setOV(newOV);
     setSession(mySession);
+    console.log('JOIN');
   }, []);
 
   useEffect(() => {
@@ -125,6 +135,7 @@ const useOpenVidu = () => {
 
   const leaveSession = useCallback(() => {
     if (session) {
+      console.log('LEAVE SESSION');
       session.disconnect();
     }
     setOV(new OpenVidu());

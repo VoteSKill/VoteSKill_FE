@@ -1,4 +1,3 @@
-import WaitingRoom from 'pages/WaitingRoom/WaitingRoom';
 import styled from 'styled-components';
 // 구글 폰트 스타일 시트 URL 생성
 const fontUrl =
@@ -9,19 +8,23 @@ link.rel = 'stylesheet';
 link.href = fontUrl;
 
 export const RoomSquare = styled.div`
-  height: 55vh;
+  height: 450px;
   display: grid;
   /* place-items: center; */
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
-
   column-gap: 130px;
   row-gap: 20px;
   padding: 40px;
   border: 10px solid #7e1717;
+  border-radius: 5px;
+  margin: 50px 80px;
   overflow-y: scroll;
   ::-webkit-scrollbar {
     width: 0;
+  }
+  &::-webkit-scrollbar {
+    display: none;
   }
 `;
 

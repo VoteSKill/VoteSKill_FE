@@ -69,7 +69,7 @@ function UserVideoComponent(props) {
     if (props.streamManager && !!videoRef.current) {
       props.streamManager.addVideoElement(videoRef.current);
     }
-  }, []);
+  }, [props.streamManager]);
 
   return (
     <div>

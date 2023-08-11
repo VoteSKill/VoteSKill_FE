@@ -30,7 +30,7 @@ function WaitingRoom() {
     setRoomId(sessionId);
     setUserName(nickname);
     setPassword(password);
-    setPublisherSetting({ ...publisherSetting, publishAudio: true, publishVideo: true });
+    setPublisherSetting({ ...publisherSetting, publishAudio: false, publishVideo: false });
 
     joinSession();
   }, [sessionId]);
@@ -43,7 +43,9 @@ function WaitingRoom() {
           <PlayerList subscribers={subscribers} />
           <Chatting messageList={messageList} sendMessage={sendMessage} />
         </S.Total>
-      ) : null}
+      ) : (
+        <h1>로딩중</h1>
+      )}
     </Layout>
   );
 }
