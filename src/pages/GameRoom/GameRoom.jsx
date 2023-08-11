@@ -10,6 +10,7 @@ import JobAssign from 'components/modal/JobAssign';
 import { useLocation } from 'react-router-dom';
 import useOpenVidu from 'hooks/useOpenVidu';
 import useEventSource from 'hooks/useEventsource';
+import Timer from 'components/timer/Timer';
 
 function GameRoom() {
   const { layout, setDay, setMafia, setCitizen } = useLayoutChange();
@@ -40,11 +41,11 @@ function GameRoom() {
   const time = (layout) => {
     if (layout.Day) {
       if (isVote) {
-        return ' 0:15';
+        return 15;
       }
-      return ' 2:00';
+      return 120;
     } else {
-      return ' 0:30';
+      return 30;
     }
   };
 
@@ -89,8 +90,9 @@ function GameRoom() {
 function SecondHeader({ layout, imageUrl, time, comment }) {
   return (
     <S.TimeHeader layout={layout}>
-      <S.TimeIcon src={imageUrl(layout)} />
-      <S.LeftTime>{time(layout)}</S.LeftTime>
+      {/* <S.TimeIcon src={imageUrl(layout)} /> */}
+      {/* <S.LeftTime>{time(layout)}</S.LeftTime> */}
+      <Timer initSecond={time(layout)}></Timer>
       <S.DayText>{comment(layout)}</S.DayText>
     </S.TimeHeader>
   );

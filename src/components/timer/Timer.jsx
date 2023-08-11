@@ -3,7 +3,7 @@ import * as S from 'components/timer/Timer.style';
 import { GiTimeBomb } from 'react-icons/gi';
 
 function Timer({ initSecond }) {
-  const [count, setCount] = useState(15);
+  const [count, setCount] = useState(initSecond);
 
   useEffect(() => {
     if (count === 0) {

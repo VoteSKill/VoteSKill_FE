@@ -33,11 +33,11 @@ function CamScreen({ sessionId }) {
     <div>
       {session !== undefined ? (
         <VideoWrapper>
-          {publisher !== undefined ? (
+          {/* {publisher !== undefined ? (
             <div>
               <UserVideoComponent streamManager={publisher} />
             </div>
-          ) : null}
+          ) : null} */}
           {subscribers.map((sub) => (
             <div
               key={sub.stream.streamId}
@@ -47,7 +47,7 @@ function CamScreen({ sessionId }) {
             >
               {imageOn === sub.id ? <KillVote src={process.env.PUBLIC_URL + '/image/game/killvote.png'} /> : null}
               <VideoComponent>
-                <UserVideoComponent streamManager={sub} />
+                <UserVideoComponent streamManager={sub.stream} />
                 <UserId>{sub.id}</UserId>
               </VideoComponent>
             </div>
@@ -62,11 +62,12 @@ function UserVideoComponent(props) {
   const videoRef = useRef();
 
   const getNicknameTag = () => {
-    return JSON.parse(props.streamManager.stream.connection.data).clientData;
+    return JSON.parse(props.connection.data).clientData;
   };
 
   useEffect(() => {
     if (props.streamManager && !!videoRef.current) {
+      console.log(props);
       props.streamManager.addVideoElement(videoRef.current);
     }
   }, [props.streamManager]);
