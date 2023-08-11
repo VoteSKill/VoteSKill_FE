@@ -78,32 +78,15 @@ const useOpenVidu = () => {
   }, [OV, session, roomId]);
 
   const getToken = async () => {
-    const { data } = await gameAPI.enterRoom(roomId, password);
-    console.log(data);
-    return data.token;
+    try {
+      const { data } = await gameAPI.enterRoom(roomId, password);
+      console.log(data);
+      return data.token;
+    } catch {
+      alert('입장실패!');
+      location.replace('/lobby');
+    }
   };
-
-  // const getToken = useCallback(async () => {
-  //   return createSession(roomId).then((sessionId) => createToken(sessionId));
-  // }, [roomId]);
-
-  // const createSession = async (roomId) => {
-  //   const response = await axios.post(
-  //     process.env.REACT_APP_DEMO_SERVER_URL + 'api/sessions',
-  //     { customSessionId: roomId },
-  //     { headers: { 'Content-Type': 'application/json' } },
-  //   );
-  //   return response.data; // The sessionId
-  // };
-
-  // const createToken = async (roomId) => {
-  //   const response = await axios.post(
-  //     process.env.REACT_APP_DEMO_SERVER_URL + 'api/sessions/' + roomId + '/connections',
-  //     {},
-  //     { headers: { 'Content-Type': 'application/json' } },
-  //   );
-  //   return response.data; // The token
-  // };
 
   const sendMessage = (inputMessage) => {
     session

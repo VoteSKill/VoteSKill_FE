@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import * as S from 'pages/WaitingRoom/WaitingRoom.style';
 import Chatting from './Chatting/Chatting';
 import PlayerList from './PlayerList/PlayerList';
@@ -22,6 +22,7 @@ function WaitingRoom() {
     setPassword,
     publisherSetting,
     setPublisherSetting,
+    leaveSession,
   } = useOpenVidu();
 
   useEffect(() => {
@@ -35,10 +36,16 @@ function WaitingRoom() {
     joinSession();
   }, [sessionId]);
 
+  useEffect(() => {
+    const handleBeforeUnload = () => leaveSession();
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [leaveSession]);
+
   return (
     <Layout>
       <Header />
-      {session ? (
+      {session && subscribers ? (
         <S.Total>
           <PlayerList subscribers={subscribers} />
           <Chatting messageList={messageList} sendMessage={sendMessage} />

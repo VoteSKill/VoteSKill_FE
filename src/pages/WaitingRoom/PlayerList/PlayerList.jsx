@@ -11,28 +11,23 @@ function PlayerList({ subscribers }) {
   const { openModal: openUserInfo } = useModal('UserInfo');
 
   useEffect(() => {
-    getNameList(subscribers);
+    setUserList(subscribers);
   }, [subscribers]);
-
-  const getNameList = (subscribers) => {
-    const nameList = subscribers.map((sub) => JSON.parse(sub.stream.connection.data).clientData);
-    setUserList(nameList);
-  };
 
   const gameStart = () => {
     navigate(`/game/${sessionId.sessionId}`, {
       state: { sessionId: sessionId.sessionId },
     });
   };
-
+  console.log(userList);
   return (
     <S.PlayerListWrapper>
       <S.Square>
-        {userList.map((item) => (
-          <S.Container key={item}>
+        {userList.map((sub, idx) => (
+          <S.Container key={idx}>
             {/* () => openModal(userIdx[index]) */}
-            <span onClick={openUserInfo}>{item}</span>
-            {/* {item === Master && <S.Logo src={process.env.PUBLIC_URL + '/crown.png'} />} */}
+            <span onClick={openUserInfo}>{JSON.parse(sub.stream.connection.data).clientData}</span>
+            {/* {sub === Master && <S.Logo src={process.env.PUBLIC_URL + '/crown.png'} />} */}
           </S.Container>
         ))}
       </S.Square>
