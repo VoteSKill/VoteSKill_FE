@@ -21,6 +21,7 @@ function MakeRoomModal() {
 
     try {
       const { data } = await gameAPI.setRoom(requestData);
+      console.log('게임생성 response:', data);
       enterWaitingRoom(requestData.customSessionId);
     } catch (e) {
       alert('게임방 생성에 실패했습니다. 다시 신청해주세요.');

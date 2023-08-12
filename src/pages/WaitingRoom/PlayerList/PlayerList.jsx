@@ -3,7 +3,7 @@ import * as S from 'pages/WaitingRoom/PlayerList/PlayList.style';
 import useModal from 'hooks/useModal';
 import { useNavigate, useParams } from 'react-router-dom';
 
-function PlayerList({ subscribers }) {
+function PlayerList({ subscribers, publisher }) {
   const sessionId = useParams();
   const navigate = useNavigate();
   const [userList, setUserList] = useState([]);
@@ -19,15 +19,16 @@ function PlayerList({ subscribers }) {
       state: { sessionId: sessionId.sessionId },
     });
   };
-  console.log(userList);
+
   return (
     <S.PlayerListWrapper>
       <S.Square>
+        <S.Container key={publisher}>
+          <span onClick={openUserInfo}>{JSON.parse(publisher.stream.connection.data).clientData}</span>
+        </S.Container>
         {userList.map((sub, idx) => (
           <S.Container key={idx}>
-            {/* () => openModal(userIdx[index]) */}
             <span onClick={openUserInfo}>{JSON.parse(sub.stream.connection.data).clientData}</span>
-            {/* {sub === Master && <S.Logo src={process.env.PUBLIC_URL + '/crown.png'} />} */}
           </S.Container>
         ))}
       </S.Square>

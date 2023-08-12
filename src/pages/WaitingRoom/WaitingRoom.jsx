@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import * as S from 'pages/WaitingRoom/WaitingRoom.style';
 import Chatting from './Chatting/Chatting';
 import PlayerList from './PlayerList/PlayerList';
@@ -6,7 +6,6 @@ import Layout from 'components/layout/Layout';
 import Header from 'components/header/Header';
 import useOpenVidu from 'hooks/useOpenVidu';
 import { useLocation, useParams } from 'react-router';
-import gameAPI from 'apis/gameAPI';
 
 function WaitingRoom() {
   const { sessionId } = useParams();
@@ -18,14 +17,18 @@ function WaitingRoom() {
     sendMessage,
     setRoomId,
     setUserName,
-    joinSession,
     setPassword,
+    joinSession,
+    publisher,
     publisherSetting,
     setPublisherSetting,
-    leaveSession,
   } = useOpenVidu();
 
   useEffect(() => {
+    if (session) {
+      console.log('이미 세션이 존재합니다.');
+      return;
+    }
     const nickname = sessionStorage.getItem('nickname');
     const password = location.state.password;
     setRoomId(sessionId);
@@ -36,18 +39,12 @@ function WaitingRoom() {
     joinSession();
   }, [sessionId]);
 
-  useEffect(() => {
-    const handleBeforeUnload = () => leaveSession();
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
-  }, [leaveSession]);
-
   return (
     <Layout>
       <Header />
-      {session && subscribers ? (
+      {session && subscribers && publisher ? (
         <S.Total>
-          <PlayerList subscribers={subscribers} />
+          <PlayerList publisher={publisher} subscribers={subscribers} />
           <Chatting messageList={messageList} sendMessage={sendMessage} />
         </S.Total>
       ) : (
