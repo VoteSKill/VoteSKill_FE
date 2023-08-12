@@ -77,7 +77,7 @@ function UserVideoComponent(props) {
       {props.streamManager !== undefined ? (
         <div>
           <CustomScreen autoPlay={true} ref={videoRef} />
-          <p>{getNicknameTag()}</p>
+          {/* <p>{getNicknameTag()}</p> */}
         </div>
       ) : null}
     </div>

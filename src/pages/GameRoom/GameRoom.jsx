@@ -82,18 +82,7 @@ function GameRoom() {
 
   const checkData = () => {
     console.log(roleData);
-    const roleParse = JSON.parse(roleData);
-    setroleParsed(roleParse.role);
-
-    // voteData 처리
-    console.log(voteData);
-    const voteParse = JSON.parse(voteData);
-    setvoteParsed(voteParse.vote);
-
-    // ability 처리
-    console.log(roomData);
-    const roomParse = JSON.parse(roomData);
-    setroomParsed(roomParse.room);
+    setroleParsed(roleData);
   };
 
   const handleModal = (sseMessage) => {
@@ -124,7 +113,7 @@ function GameRoom() {
         <HiQuestionMarkCircle size={'5%'} onClick={openjobAssign} />
       </div>
       <Modal id="JobAssign">
-        <JobAssign data={roleParsed} />
+        <JobAssign data={roleData} />
       </Modal>
       <Modal id="VoteResult">
         <VoteResult data={voteParsed} />

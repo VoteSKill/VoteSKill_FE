@@ -4,23 +4,34 @@ import useModal from 'hooks/useModal';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import { roomState } from 'recoil/atoms/roomState';
+import gameAPI from 'apis/gameAPI';
 
-function PlayerList({ subscribers, publisher }) {
+function PlayerList({ subscribers, publisher, roleData }) {
   const sessionId = useParams();
   const navigate = useNavigate();
   const [userList, setUserList] = useState([]);
   const [host, setHost] = useRecoilState(roomState);
-
   const { openModal: openUserInfo } = useModal('UserInfo');
 
   useEffect(() => {
     setUserList(subscribers);
   }, [subscribers]);
 
-  const gameStart = () => {
+  useEffect(() => {
+    console.log('roleData', roleData);
+    if (roleData) {
+      moveTo();
+    }
+  }, [roleData]);
+
+  const moveTo = () => {
     navigate(`/game/${sessionId.sessionId}`, {
       state: { sessionId: sessionId.sessionId },
     });
+  };
+
+  const gameStart = async () => {
+    const { status } = await gameAPI.startGame(sessionId.sessionId);
   };
 
   const checkHost = () => sessionStorage.getItem('nickname') === host;

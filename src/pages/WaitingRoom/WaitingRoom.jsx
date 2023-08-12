@@ -6,18 +6,15 @@ import Layout from 'components/layout/Layout';
 import Header from 'components/header/Header';
 import useOpenVidu from 'hooks/useOpenVidu';
 import { useLocation, useParams } from 'react-router';
-import gameAPI from 'apis/gameAPI';
 import useEventSource from 'hooks/useEventsource';
 import axios from 'axios';
 
 function WaitingRoom() {
   const { sessionId } = useParams();
   const location = useLocation();
-  const url = `http://13.125.113.149:8080/sse/enter/${sessionId}/${sessionStorage.getItem('nickname')}`;
-  const source = new EventSource(url); // 구독
-  const connectData = useEventSource('connect', sessionId, sessionStorage.getItem('nickname'));
+  const nickname = sessionStorage.getItem('nickname');
+  const roleData = useEventSource('role', sessionId, nickname);
 
-  console.log(source, '구독완료');
   const {
     session,
     messageList,
@@ -33,7 +30,8 @@ function WaitingRoom() {
   } = useOpenVidu();
 
   const getServerSentEvent = async () => {
-    const res = await axios.get(url);
+    const URL = process.env.REACT_APP_GAME_SERVER_URL + `/sse/enter/${sessionId}/${nickname}`;
+    const res = await axios.get(URL);
   };
 
   useEffect(() => {
@@ -52,14 +50,14 @@ function WaitingRoom() {
 
   useEffect(() => {
     getServerSentEvent();
-  });
-  console.log(connectData, '커넥트');
+  }, []);
+
   return (
     <Layout>
       <Header />
       {session && subscribers && publisher ? (
         <S.Total>
-          <PlayerList publisher={publisher} subscribers={subscribers} />
+          <PlayerList publisher={publisher} subscribers={subscribers} roleData={roleData} />
           <Chatting messageList={messageList} sendMessage={sendMessage} />
         </S.Total>
       ) : (
