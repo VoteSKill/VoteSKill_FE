@@ -3,6 +3,7 @@ import { OpenVidu } from 'openvidu-browser';
 import { useCallback, useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import * as OVAtom from 'recoil/atoms/openViduState';
+import { roomState } from 'recoil/atoms/roomState';
 
 const useOpenVidu = () => {
   const [OV, setOV] = useState(undefined);
@@ -18,6 +19,7 @@ const useOpenVidu = () => {
   const [messageList, setMessageList] = useState([]);
   const [password, setPassword] = useState('');
   const [publisherSetting, setPublisherSetting] = useRecoilState(OVAtom.publisherState);
+  const [host, setHost] = useRecoilState(roomState);
 
   const joinSession = useCallback(() => {
     const newOV = new OpenVidu();
@@ -128,6 +130,7 @@ const useOpenVidu = () => {
     setSubscribers([]);
     setMainStreamManager(undefined);
     setPublisher(undefined);
+    setHost(null);
   }, [session]);
 
   const handleMainVideoStream = useCallback(
@@ -143,17 +146,11 @@ const useOpenVidu = () => {
     const handleBeforeUnload = (event) => {
       event.preventDefault();
       event.returnValue = '';
-      // sessionStorage.removeItem('ovToken');
       leaveSession();
     };
     window.addEventListener('beforeunload', handleBeforeUnload);
     return () => window.removeEventListener('beforeunload', handleBeforeUnload);
   }, [leaveSession]);
-
-  // subscribers.forEach((sub) => {
-  //   console.log(JSON.parse(sub.stream.connection.data).clientData);
-  // });
-  // console.log('publisher', publisher);
 
   return {
     OV,

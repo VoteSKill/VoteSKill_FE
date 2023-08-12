@@ -2,11 +2,14 @@ import { useEffect, useState } from 'react';
 import * as S from 'pages/WaitingRoom/PlayerList/PlayList.style';
 import useModal from 'hooks/useModal';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { roomState } from 'recoil/atoms/roomState';
 
 function PlayerList({ subscribers, publisher }) {
   const sessionId = useParams();
   const navigate = useNavigate();
   const [userList, setUserList] = useState([]);
+  const [host, setHost] = useRecoilState(roomState);
 
   const { openModal: openUserInfo } = useModal('UserInfo');
 
@@ -19,6 +22,8 @@ function PlayerList({ subscribers, publisher }) {
       state: { sessionId: sessionId.sessionId },
     });
   };
+
+  const checkHost = () => sessionStorage.getItem('nickname') === host;
 
   return (
     <S.PlayerListWrapper>
@@ -34,7 +39,7 @@ function PlayerList({ subscribers, publisher }) {
       </S.Square>
       <S.ButtonSquare>
         <S.OutButton>EXIT</S.OutButton>
-        <S.StartButton onClick={gameStart}>START</S.StartButton>
+        {checkHost() && <S.StartButton onClick={gameStart}>START</S.StartButton>}
       </S.ButtonSquare>
     </S.PlayerListWrapper>
   );

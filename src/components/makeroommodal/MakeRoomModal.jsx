@@ -4,11 +4,14 @@ import { Switch } from '@mui/material';
 import gameAPI from 'apis/gameAPI';
 import useInput from 'hooks/useInput';
 import { useNavigate } from 'react-router';
+import { useRecoilState } from 'recoil';
+import { roomState } from 'recoil/atoms/roomState';
 
 function MakeRoomModal() {
   const [customSessionId, setCustomSessionId, customSessionIdHandler] = useInput('');
   const [password, setPassword, passwordHandler] = useInput('');
   const [boxChecked, setboxChecked] = useState(false);
+  const [host, setHost] = useRecoilState(roomState);
 
   const navigate = useNavigate();
 
@@ -22,6 +25,7 @@ function MakeRoomModal() {
     try {
       const { data } = await gameAPI.setRoom(requestData);
       console.log('게임생성 response:', data);
+      setHost(data.host);
       enterWaitingRoom(requestData.customSessionId);
     } catch (e) {
       alert('게임방 생성에 실패했습니다. 다시 신청해주세요.');
