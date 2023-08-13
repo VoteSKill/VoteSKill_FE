@@ -1,18 +1,9 @@
-import Modal from 'components/modal/Modal';
 import * as S from 'components/jobassign/JobAssign.Style';
 import useLayoutChange from 'hooks/useLayoutChange';
 import useModal from 'hooks/useModal';
-import { FiXCircle } from 'react-icons/fi';
 import React, { useState, useEffect } from 'react';
-import { Background } from 'components/layout/Layout.Style';
-import { keyframes } from 'styled-components';
-import * as M from 'components/modal/Modal.style';
 
-function JobAssign(props) {
-  console.log(props.data);
-  const { layout } = useLayoutChange();
-  const { modalToggleState, openModal, closeModal } = useModal('JobAssign');
-
+function JobAssign({ data }) {
   const modalImg = [
     '/image/jobintroduce/mafia.png',
     '/image/jobintroduce/spy.png',
@@ -52,14 +43,13 @@ function JobAssign(props) {
   ];
   const [showJobModal, setShowJobModal] = useState();
 
-  const currentModalIndex = checkJob.indexOf(props.data);
+  const currentModalIndex = checkJob.indexOf(data);
   const handleJobModal = () => {
     setShowJobModal(!showJobModal);
   };
   // 2
   useEffect(() => {
     //console.log(modalToggleState);
-    openModal();
     handleJobModal();
     setTimeout(() => {
       handleJobModal();
@@ -69,27 +59,21 @@ function JobAssign(props) {
   }, []);
 
   return (
-    <div>
-      {modalToggleState && (
-        <S.JobAssignModalBody layout={layout} showJobModal={showJobModal}>
-          {modalJob.map((job, index) => (
-            <S.ModalContent key={index} active={index === currentModalIndex}>
-              <S.JobImage src={process.env.PUBLIC_URL + modalImg[currentModalIndex]} />
-              <S.JobIntroduceDiv>
-                <S.JobAssignText>
-                  당신의 직업은
-                  <br /> {modalJob[currentModalIndex]}입니다.
-                </S.JobAssignText>
-                <S.JobDescription>{modalDescription[currentModalIndex]}</S.JobDescription>
-              </S.JobIntroduceDiv>
-            </S.ModalContent>
-          ))}
-          <M.ModalExitButton>
-            <FiXCircle size={30} color="#000000" onClick={closeModal} cursor={'pointer'} />
-          </M.ModalExitButton>
-        </S.JobAssignModalBody>
-      )}
-    </div>
+    <S.JobAssignModalBody showJobModal={showJobModal}>
+      <h1>{data}</h1>
+      {/* {modalJob.map((job, index) => (
+        <S.ModalContent key={index} active={index === currentModalIndex}>
+          <S.JobImage src={process.env.PUBLIC_URL + modalImg[currentModalIndex]} />
+          <S.JobIntroduceDiv>
+            <S.JobAssignText>
+              당신의 직업은
+              <br /> {modalJob[currentModalIndex]}입니다.
+            </S.JobAssignText>
+            <S.JobDescription>{modalDescription[currentModalIndex]}</S.JobDescription>
+          </S.JobIntroduceDiv>
+        </S.ModalContent>
+      ))} */}
+    </S.JobAssignModalBody>
   );
 }
 

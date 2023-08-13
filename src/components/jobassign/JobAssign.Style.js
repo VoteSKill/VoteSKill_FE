@@ -1,22 +1,12 @@
-import Modal, { ModalBackground, ModalBody } from 'components/modal/Modal.style';
 import { styled, keyframes, css } from 'styled-components';
-import { theme } from '../../styles/theme';
 
 export const JobAssignModalBody = styled.div`
   width: 700px;
   height: 400px;
-  z-index: 2;
-  margin-left: 100px;
-  background: linear-gradient(
-    to top,
-    ${(props) =>
-      props.layout.Day ? props.theme.day.start : props.layout.Mafia ? props.theme.night.start : props.theme.color.blue},
-    ${(props) => (props.layout.Day ? props.theme.day.end : props.theme.night.end)} 80%
-  );
-  border: 2px solid black;
+  background-color: whitesmoke;
   border-radius: 20px;
   text-align: center;
-  animation: ${(props) => (props.showJobModal ? fadeIn : fadeOut)} 0.15s ease-out;
+  /* animation: ${(props) => (props.showJobModal ? fadeIn : fadeOut)} 0.15s ease-out; */
 `;
 
 export const ModalContent = styled.div`

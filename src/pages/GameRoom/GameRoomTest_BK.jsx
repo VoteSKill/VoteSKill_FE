@@ -2,7 +2,7 @@ import Header from 'components/header/Header';
 import Layout from 'components/layout/Layout';
 import useLayoutChange from 'hooks/useLayoutChange';
 import * as S from 'pages/GameRoom/GameRoom.Style';
-import CamScreen from './CamScreen';
+import CamScreen from './CamScreen/CamScreen';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import JobAssign from 'components/modal/JobAssign';

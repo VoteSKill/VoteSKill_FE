@@ -12,8 +12,9 @@ const useEventSource = (eventType, sessionId, nickname) => {
     };
 
     source.addEventListener(eventType, function (e) {
-      console.log('백엔드가보낸데이터', e.data);
-      setRealData(e.data);
+      console.log(e.data);
+      const parsedData = JSON.parse(e.data);
+      setRealData(parsedData);
     });
 
     source.onopen = () => {

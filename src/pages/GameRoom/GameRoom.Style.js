@@ -1,11 +1,9 @@
 import styled from 'styled-components';
 
-//---------------------------
 export const ScreenWrapper = styled.div`
-  width: 80vw;
-  height: 80vh;
-  position: absolute;
-  left: 10%;
+  margin: 0 auto;
+  width: 100%;
+  height: calc(100% - 70px);
 `;
 
 export const TimeHeader = styled.div`
