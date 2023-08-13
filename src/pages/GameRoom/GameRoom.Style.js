@@ -26,5 +26,3 @@ export const LeftTime = styled.div`
 export const DayText = styled.div`
   margin-top: 10px;
 `;
-
-//---------------------------

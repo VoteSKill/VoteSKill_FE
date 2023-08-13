@@ -4,24 +4,14 @@ import * as S from './CamScreen.Style';
 function CamScreen({ publisher, subscribers }) {
   const [imageOn, setImageOn] = useState('');
 
-  const handleClickKillVote = (id) => {
-    setImageOn(id);
-  };
-
   return (
     <S.VideoWrapper>
-      {publisher !== undefined ? <UserVideoComponent streamManager={publisher} /> : null}
+      {publisher !== undefined ? (
+        <UserVideoComponent streamManager={publisher} setImageOn={setImageOn} imageOn={imageOn} />
+      ) : null}
       {subscribers.length > 0 &&
         subscribers.map((sub) => (
-          <div
-            key={sub.stream.streamId}
-            onClick={() => {
-              handleClickKillVote(sub.stream.streamId);
-            }}
-          >
-            <UserVideoComponent streamManager={sub} />
-            {imageOn === sub.id ? <S.KillVote src={process.env.PUBLIC_URL + '/image/game/killvote.png'} /> : null}
-          </div>
+          <UserVideoComponent key={sub.stream.streamId} streamManager={sub} setImageOn={setImageOn} imageOn={imageOn} />
         ))}
     </S.VideoWrapper>
   );
@@ -30,13 +20,16 @@ function CamScreen({ publisher, subscribers }) {
 function UserVideoComponent(props) {
   const videoRef = useRef();
 
-  const getNicknameTag = (sub) => {
-    return JSON.parse(sub.stream.connection.data).clientData;
-  };
+  const getNicknameTag = (sub) => JSON.parse(sub.stream.connection.data).clientData;
+
+  const handleClickKillVote = (sub) => props.setImageOn(getNicknameTag(sub));
+
+  const checkVote = (sub) => props.imageOn === getNicknameTag(sub);
+
+  const resetVote = () => props.setImageOn('');
 
   useEffect(() => {
     if (props.streamManager && !!videoRef.current) {
-      console.log(props);
       props.streamManager.addVideoElement(videoRef.current);
     }
   }, [props.streamManager]);
@@ -45,7 +38,13 @@ function UserVideoComponent(props) {
     <>
       {props.streamManager !== undefined ? (
         <S.UserInfoWrapper>
-          <S.VideoContainer>
+          {checkVote(props.streamManager) && (
+            <S.KillVote
+              src={process.env.PUBLIC_URL + '/image/game/killvote.png'}
+              onClick={() => resetVote(props.streamManager)}
+            />
+          )}
+          <S.VideoContainer onClick={() => handleClickKillVote(props.streamManager)}>
             <S.CustomScreen autoPlay={true} ref={videoRef} />
           </S.VideoContainer>
           <span>{getNicknameTag(props.streamManager)}</span>
