@@ -7,7 +7,7 @@ import axios from 'axios';
 
 function WaitingRoom({ sessionId, openvidu, password, setInGame, setMyRole }) {
   const nickname = sessionStorage.getItem('nickname');
-  const roleData = useEventSource('role', sessionId, nickname);
+  const [roleData, setRoleData] = useEventSource('role', sessionId, nickname);
 
   const getServerSentEvent = async () => {
     const URL = process.env.REACT_APP_GAME_SERVER_URL + `/sse/enter/${sessionId}/${nickname}`;

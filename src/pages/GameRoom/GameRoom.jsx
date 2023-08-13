@@ -19,8 +19,8 @@ function GameRoom({ sessionId, openvidu, myRole }) {
   const { openModal: openvoteResult } = useModal('VoteResult');
   const { openModal: openabilityResult } = useModal('AbilityResult');
 
-  const voteData = useEventSource('vote', sessionId, nickname);
-  const roomData = useEventSource('room', sessionId, nickname);
+  const [voteData, setVoteData] = useEventSource('vote', sessionId, nickname);
+  const [roomData, setRoomData] = useEventSource('room', sessionId, nickname);
 
   const [currentTime, setCurrentTime] = useRecoilState(currentTimeState);
 

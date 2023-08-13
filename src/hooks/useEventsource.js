@@ -29,6 +29,6 @@ const useEventSource = (eventType, sessionId, nickname) => {
     return () => source.close();
   }, [sessionId, nickname]);
 
-  return realData;
+  return [realData, setRealData];
 };
 export default useEventSource;
