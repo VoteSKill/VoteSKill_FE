@@ -1,21 +1,34 @@
 import { useEffect, useState } from 'react';
 
-const useEventSource = (eventType, sessionId, nickname) => {
+const useEventSource = (sessionId, nickname) => {
   const URL = process.env.REACT_APP_GAME_SERVER_URL + `/sse/enter/${sessionId}/${nickname}`;
-  const [realData, setRealData] = useState();
+
+  const [roleData, setRoleData] = useState(null);
+  const [roomData, setroomData] = useState(null);
+  const [voteData, setVoteData] = useState(null);
 
   useEffect(() => {
     const source = new EventSource(URL);
 
-    source.onmessage = (event) => {
-      console.log('onmessage', event.data);
-    };
-
-    source.addEventListener(eventType, function (e) {
+    const roleHandler = (e) => {
       console.log(e.data);
       const parsedData = JSON.parse(e.data);
-      setRealData(parsedData);
-    });
+      setRoleData(parsedData);
+    };
+    const roomHandler = (e) => {
+      console.log(e.data);
+      const parsedData = JSON.parse(e.data);
+      setroomData(parsedData);
+    };
+    const voteHandler = (e) => {
+      console.log(e.data);
+      const parsedData = JSON.parse(e.data);
+      setVoteData(parsedData);
+    };
+
+    source.addEventListener('role', roleHandler);
+    source.addEventListener('room', roomHandler);
+    source.addEventListener('vote', voteHandler);
 
     source.onopen = () => {
       console.log('연결 성공');
@@ -25,10 +38,12 @@ const useEventSource = (eventType, sessionId, nickname) => {
       console.log('연결 중 에러 발생');
       source.close();
     };
-
-    return () => source.close();
+    return () => {
+      console.log('CLOSE SSE');
+      source.close();
+    };
   }, [sessionId, nickname]);
 
-  return [realData, setRealData];
+  return { roleData, voteData, roomData };
 };
 export default useEventSource;

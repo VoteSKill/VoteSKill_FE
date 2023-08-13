@@ -1,5 +1,7 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as S from './CamScreen.Style';
+import { useRecoilState } from 'recoil';
+import { isSkillTimeState, isVoteTimeState } from 'recoil/atoms/gameState';
 
 function CamScreen({ publisher, subscribers }) {
   const [imageOn, setImageOn] = useState('');
@@ -18,11 +20,19 @@ function CamScreen({ publisher, subscribers }) {
 }
 
 function UserVideoComponent(props) {
+  const [isVoteTime, setIsVoteTime] = useRecoilState(isVoteTimeState);
+  const [isSkillTime, setIsSkillTime] = useRecoilState(isSkillTimeState);
   const videoRef = useRef();
 
   const getNicknameTag = (sub) => JSON.parse(sub.stream.connection.data).clientData;
 
-  const handleClickKillVote = (sub) => props.setImageOn(getNicknameTag(sub));
+  const handleClickKillVote = (sub) => {
+    if (isVoteTime || isSkillTime) {
+      props.setImageOn(getNicknameTag(sub));
+    } else {
+      return;
+    }
+  };
 
   const checkVote = (sub) => props.imageOn === getNicknameTag(sub);
 

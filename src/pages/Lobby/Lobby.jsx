@@ -8,9 +8,11 @@ import { roomListState } from 'recoil/atoms/lobbyState';
 import SearchRoom from './SearchRoom/SearchRoom';
 import RoomList from './RoomList/RoomList';
 import gameAPI from 'apis/gameAPI';
+import useLayoutChange from 'hooks/useLayoutChange';
 
 function Lobby() {
   const [roomList, setRoomList] = useRecoilState(roomListState);
+  const { setMafia } = useLayoutChange();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -18,6 +20,7 @@ function Lobby() {
       setRoomList(data);
     };
     fetchData();
+    setMafia();
   }, []);
 
   return (

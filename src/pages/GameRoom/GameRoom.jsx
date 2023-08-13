@@ -9,7 +9,7 @@ import Timer from 'components/timer/Timer';
 import JobAssign from 'components/jobassign/JobAssign';
 import VoteResult from 'components/voteresult/VoteResult';
 import AbilityResult from 'components/abilityresult/AbilityResult';
-import { currentTimeState } from 'recoil/atoms/gameState';
+import { currentTimeState, isSkillTimeState, isVoteTimeState } from 'recoil/atoms/gameState';
 import { useRecoilState } from 'recoil';
 
 function GameRoom({ sessionId, openvidu, myRole }) {
@@ -19,19 +19,46 @@ function GameRoom({ sessionId, openvidu, myRole }) {
   const { openModal: openvoteResult } = useModal('VoteResult');
   const { openModal: openabilityResult } = useModal('AbilityResult');
 
-  const [voteData, setVoteData] = useEventSource('vote', sessionId, nickname);
-  const [roomData, setRoomData] = useEventSource('room', sessionId, nickname);
+  const { voteData, roomData } = useEventSource(sessionId, nickname);
 
   const [currentTime, setCurrentTime] = useRecoilState(currentTimeState);
 
-  const [voteParsed, setvoteParsed] = useState();
-  const [roomParsed, setroomParsed] = useState();
+  const [voteResult, setVoteResult] = useState([]);
+  const [skillResult, setSkillResult] = useState([]);
+
+  const [isVoteTime, setIsVoteTime] = useRecoilState(isVoteTimeState);
+  const [isSkillTime, setIsSkillTime] = useRecoilState(isSkillTimeState);
 
   useEffect(() => {
+    // 최초 입장 시 직업 배정 알리미
     setDay();
     setCurrentTime(myRole.timer);
     openjobAssign();
   }, [myRole]);
+
+  useEffect(() => {
+    // 투표 시간 알리미
+    if (voteData) {
+      console.log('voteData', voteData);
+      setIsVoteTime(true);
+      setCurrentTime(voteData.timer);
+    }
+  }, [voteData]);
+
+  useEffect(() => {
+    // 능력/투표 결과 알리미
+    if (roomData) {
+      if (roomData.type === 'vote') {
+        setVoteResult(roomData.message);
+        setMafia();
+      } else if (roomData.type === 'skill') {
+        setSkillResult(roomData.message);
+        setDay();
+      }
+      setCurrentTime(roomData.timer);
+      // + 카메라 처리
+    }
+  }, [roomData]);
 
   return (
     <S.ScreenWrapper>
@@ -42,10 +69,10 @@ function GameRoom({ sessionId, openvidu, myRole }) {
           <JobAssign data={myRole.role} />
         </Modal>
         <Modal id="VoteResult">
-          <VoteResult data={voteParsed} />
+          <VoteResult data={voteResult} />
         </Modal>
         <Modal id="AbilityResult">
-          <AbilityResult data={roomParsed} />
+          <AbilityResult data={skillResult} />
         </Modal>
       </>
     </S.ScreenWrapper>
