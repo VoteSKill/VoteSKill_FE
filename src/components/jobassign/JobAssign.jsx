@@ -59,7 +59,7 @@ function JobAssign({ data }) {
   }, []);
 
   return (
-    <S.JobAssignModalBody showJobModal={showJobModal}>
+    <S.JobAssignModalBody>
       <h1>{data}</h1>
       {/* {modalJob.map((job, index) => (
         <S.ModalContent key={index} active={index === currentModalIndex}>

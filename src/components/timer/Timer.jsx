@@ -1,25 +1,23 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import * as S from 'components/timer/Timer.style';
 import { GiTimeBomb } from 'react-icons/gi';
+import { useRecoilState } from 'recoil';
+import { currentTimeState } from 'recoil/atoms/gameState';
 
-function Timer({ initSecond, callbackFunction }) {
-  const [count, setCount] = useState();
-
-  useEffect(() => {
-    setCount(initSecond);
-  }, []);
+function Timer() {
+  const [currentTime, setCurrentTime] = useRecoilState(currentTimeState);
 
   useEffect(() => {
-    if (count === 0) {
+    if (currentTime === 0) {
       return;
     }
 
     const calculate = setInterval(() => {
-      setCount((count) => count - 1);
+      setCurrentTime((currentTime) => currentTime - 1);
     }, 1000);
 
     return () => clearInterval(calculate);
-  }, [count]);
+  }, [currentTime]);
 
   const convertTime = useCallback((seconds) => {
     const addZero = (num) => (num < 10 ? '0' : '') + num;
@@ -34,10 +32,10 @@ function Timer({ initSecond, callbackFunction }) {
 
   return (
     <S.TimerWrapper>
-      <S.IconBox $sec={count}>
+      <S.IconBox $sec={currentTime}>
         <GiTimeBomb size={'100%'} />
       </S.IconBox>
-      <S.TimeSpan $sec={count}>{convertTime(count)}</S.TimeSpan>
+      <S.TimeSpan $sec={currentTime}>{convertTime(currentTime)}</S.TimeSpan>
     </S.TimerWrapper>
   );
 }

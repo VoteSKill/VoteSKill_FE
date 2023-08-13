@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import * as S from './CamScreen.Style';
 
 function CamScreen({ publisher, subscribers }) {
@@ -54,4 +54,4 @@ function UserVideoComponent(props) {
   );
 }
 
-export default CamScreen;
+export default React.memo(CamScreen);

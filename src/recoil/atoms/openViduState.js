@@ -7,7 +7,7 @@ export const roomIdState = atom({
 
 export const userNameState = atom({
   key: 'userNameState',
-  default: '박종호',
+  default: '',
 });
 
 export const publisherState = atom({

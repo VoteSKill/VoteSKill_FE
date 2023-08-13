@@ -1,7 +1,7 @@
 import useModal from 'hooks/useModal';
 import * as S from 'components/modal/Modal.style';
 import { FiXCircle } from 'react-icons/fi';
-import { useState } from 'react';
+import React from 'react';
 
 function Modal({ children, id }) {
   const { modalToggleState, closeModal } = useModal(id);
@@ -22,4 +22,4 @@ function Modal({ children, id }) {
   );
 }
 
-export default Modal;
+export default React.memo(Modal);
