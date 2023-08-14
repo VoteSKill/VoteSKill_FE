@@ -30,12 +30,15 @@ function GameRoom({ sessionId, openvidu, myRole }) {
   const [isSkillTime, setIsSkillTime] = useRecoilState(isSkillTimeState);
 
   const checkDeath = (deathArray) => {
-    const isDeath = deathArray.find(nickname);
-    return isDeath === undefined ? true : false;
+    const isDeath = deathArray.find((playerNickname) => playerNickname === nickname);
+    console.log('isDeath', isDeath);
+    return isDeath === undefined ? false : true;
   };
 
-  const setDeath = () =>
-    openvidu.setPublisherSetting({ ...openvidu.publisherSetting, publishAudio: false, publishVideo: false });
+  const setDeath = () => {
+    openvidu.publisher.publishAudio(false);
+    openvidu.publisher.publishVideo(false);
+  };
 
   useEffect(() => {
     // 최초 입장 시 직업 배정 알리미
