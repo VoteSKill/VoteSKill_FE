@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import * as S from 'pages/Lobby/MakeRoom/MakeRoom.Style';
 import useModal from 'hooks/useModal';
 import MakeRoomModal from 'components/makeroommodal/MakeRoomModal';
