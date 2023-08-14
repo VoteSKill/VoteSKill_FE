@@ -29,12 +29,21 @@ function GameRoom({ sessionId, openvidu, myRole }) {
   const [isVoteTime, setIsVoteTime] = useRecoilState(isVoteTimeState);
   const [isSkillTime, setIsSkillTime] = useRecoilState(isSkillTimeState);
 
+  const checkDeath = (deathArray) => {
+    const isDeath = deathArray.find(nickname);
+    return isDeath === undefined ? true : false;
+  };
+
+  const setDeath = () =>
+    openvidu.setPublisherSetting({ ...openvidu.publisherSetting, publishAudio: false, publishVideo: false });
+
   useEffect(() => {
     // 최초 입장 시 직업 배정 알리미
     setDay();
     console.log(myRole['role']);
     setCurrentTime(myRole.timer);
     openjobAssign(myRole['role']);
+    openvidu.setPublisherSetting({ ...openvidu.publisherSetting, publishAudio: true, publishVideo: true });
   }, [myRole]);
 
   useEffect(() => {
@@ -73,6 +82,7 @@ function GameRoom({ sessionId, openvidu, myRole }) {
           confirmButtonText: '확인',
         });
       }
+      if (checkDeath(roomData.death)) setDeath();
       setCurrentTime(roomData.timer);
       // + 카메라 처리
     }
