@@ -5,6 +5,7 @@ import PlayerList from './PlayerList/PlayerList';
 import useEventSource from 'hooks/useEventsource';
 import axios from 'axios';
 import { useRecoilState } from 'recoil';
+import Loading from 'components/loading/Loading';
 function WaitingRoom({ sessionId, openvidu, password, setInGame, setMyRole }) {
   const nickname = sessionStorage.getItem('nickname');
   const { roleData } = useEventSource(sessionId, nickname);
@@ -45,7 +46,7 @@ function WaitingRoom({ sessionId, openvidu, password, setInGame, setMyRole }) {
           <Chatting messageList={openvidu.messageList} sendMessage={openvidu.sendMessage} />
         </S.Total>
       ) : (
-        <h1>로딩중</h1>
+        <Loading />
       )}
     </>
   );

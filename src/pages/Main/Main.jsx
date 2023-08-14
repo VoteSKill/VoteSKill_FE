@@ -1,5 +1,4 @@
 import Layout from 'components/layout/Layout';
-import Timer from 'components/timer/Timer';
 import { KAKAO_AUTH_URL } from 'constants/kakaoLogin';
 import * as S from 'pages/Main/Main.Style';
 

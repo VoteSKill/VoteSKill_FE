@@ -1,5 +1,6 @@
 import userAPI from 'apis/userAPI';
 import Layout from 'components/layout/Layout';
+import Loading from 'components/loading/Loading';
 import { useEffect } from 'react';
 import { setCookie } from 'utils/cookie';
 
@@ -25,7 +26,11 @@ function KakaoLogin() {
     getToken();
   }, []);
 
-  return <Layout isMain={true}></Layout>;
+  return (
+    <Layout isMain={true}>
+      <Loading />
+    </Layout>
+  );
 }
 
 export default KakaoLogin;
