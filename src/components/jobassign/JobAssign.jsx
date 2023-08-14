@@ -4,7 +4,6 @@ import useModal from 'hooks/useModal';
 import React, { useState, useEffect } from 'react';
 
 function JobAssign({ data }) {
-  console.log('내 직업', data);
   const jobData = {
     MAFIA: {
       img: '/image/jobintroduce/mafia.png',

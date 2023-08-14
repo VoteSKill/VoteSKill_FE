@@ -27,11 +27,6 @@ const gameAPI = {
       },
     }),
 
-  useSkill: (roomId, userId) =>
-    axiosInstance.post(`/rooms/${roomId}/skill`, {
-      params: {
-        target: userId,
-      },
-    }),
+  useSkill: (roomId, userId) => axiosInstance.post(`/rooms/${roomId}/skill/${userId}`),
 };
 export default gameAPI;
