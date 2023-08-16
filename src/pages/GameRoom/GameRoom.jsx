@@ -37,7 +37,7 @@ function GameRoom({ sessionId, openvidu, myRole, setInGame }) {
   useEffect(() => {
     // 최초 입장 시 직업 배정 알리미
     setResurrection();
-    setDay();
+    setCitizen();
     setCurrentTime(myRole.timer);
     openjobAssign(myRole.role);
   }, [myRole]);
@@ -62,18 +62,22 @@ function GameRoom({ sessionId, openvidu, myRole, setInGame }) {
         setImageOn('');
       }
       if (roomData.type === 'skill') {
-        setDay();
+        setCitizen();
         showSwal(convertMessageToText(roomData.messages), '확인');
         setIsSkillTime(false);
         setImageOn('');
+        if (deadPlayers.length > roomData.death.length && !checkDeath(roomData.death, nickname)) {
+          setResurrection();
+          setDeadPlayers(roomData.death);
+        }
       }
       if (roomData.type === 'gameover') {
         showSwal(convertMessageToText(roomData.messages), '확인');
         setIsSkillTime(false);
         setImageOn('');
-        console.log('GAME OVER');
-        setInGame(false);
+        location.replace('/lobby');
       }
+
       if (checkDeath(roomData.death, nickname)) {
         setDeath();
         setDeadPlayers(roomData.death);
@@ -96,7 +100,6 @@ function GameRoom({ sessionId, openvidu, myRole, setInGame }) {
           setImageOn={setImageOn}
         />
       )}
-
       <Modal id="JobAssign">
         <JobAssign data={myRole.role} />
       </Modal>

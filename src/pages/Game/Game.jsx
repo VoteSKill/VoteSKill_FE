@@ -7,6 +7,8 @@ import WaitingRoom from 'pages/WaitingRoom/WaitingRoom';
 import { useLocation, useParams } from 'react-router-dom';
 import useLayoutChange from 'hooks/useLayoutChange';
 import gameAPI from 'apis/gameAPI';
+import { skillState } from 'recoil/atoms/gameState';
+import { useSetRecoilState } from 'recoil';
 
 function Game() {
   const location = useLocation();
@@ -16,16 +18,18 @@ function Game() {
   const openvidu = useOpenVidu();
   const [inGame, setInGame] = useState(false);
   const [myRole, setMyRole] = useState(undefined);
+  const setSkill = useSetRecoilState(skillState(myRole));
 
-  // useEffect(() => {
-  //   return () => {
-  //     try {
-  //       gameAPI.exitRoom(sessionId);
-  //     } catch (e) {
-  //       console.log(e);
-  //     }
-  //   };
-  // }, []);
+  useEffect(() => {
+    return () => {
+      setSkill(1); // 스킬 사용 횟수 초기화;
+      try {
+        // gameAPI.exitRoom(sessionId);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+  }, []);
 
   return (
     <Layout isMain={false} $layout={layout}>

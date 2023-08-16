@@ -37,36 +37,38 @@ function CamScreen({ publisher, subscribers, myRole, roomId, imageOn, setImageOn
   );
 }
 
-function UserVideoComponent(props) {
+function UserVideoComponent({ streamManager, setImageOn, imageOn, myRole, roomId }) {
   const [isVoteTime, setIsVoteTime] = useRecoilState(isVoteTimeState);
   const [isSkillTime, setIsSkillTime] = useRecoilState(isSkillTimeState);
   const videoRef = useRef();
-  const roleName = props.myRole;
-  const roomId = props.roomId;
-  const deadPlayers = useRecoilValue(deadPlayerState);
   const NORMAL_SKILL_ROLE = ['DOCTOR', 'MAFIA'];
   const NONE_SKILL_ROLE = ['SOLDIER', 'POLITICIAN'];
   const ONECE_SKILL_ROLE = ['PRIEST', 'REPORTER'];
+  const deadPlayers = useRecoilValue(deadPlayerState);
+  const [skill, setSkill] = useRecoilState(skillState(myRole));
+  const [useNickname, setUserNickname] = useState('');
 
-  const getNicknameTag = (sub) => JSON.parse(sub.stream.connection.data).clientData;
-  const [skill, setSkill] = useRecoilState(skillState(roleName));
+  useEffect(() => {
+    const getNicknameTag = (sub) => JSON.parse(sub.stream.connection.data).clientData;
+    setUserNickname(getNicknameTag(streamManager));
+  }, [streamManager]);
 
-  const useSkillAndPost = async (roleName, nickname) => {
-    if (roleName === 'POLICE') {
+  const useSkillAndPost = async (myRole, nickname) => {
+    if (myRole === 'POLICE') {
       const { data } = await gameAPI.useSkill(roomId, nickname);
       showSwal(data.message, '닫기');
       return;
     }
-    if (NONE_SKILL_ROLE.includes(roleName)) {
+    if (NONE_SKILL_ROLE.includes(myRole)) {
       showSwal(`현재 직업은 사용할 스킬이 없습니다.`, '닫기');
       return;
     }
-    if (NORMAL_SKILL_ROLE.includes(roleName)) {
+    if (NORMAL_SKILL_ROLE.includes(myRole)) {
       showSwal(`${nickname}을 선택하셨습니다.`, '닫기');
       await gameAPI.useSkill(roomId, nickname);
       return;
     }
-    if (ONECE_SKILL_ROLE.includes(roleName)) {
+    if (ONECE_SKILL_ROLE.includes(myRole)) {
       if (skill < 1) {
         showSwal(`스킬 사용 횟수가 소진되었습니다.`, '닫기');
         return;
@@ -82,11 +84,12 @@ function UserVideoComponent(props) {
     const { data } = await gameAPI.voteGame(roomId, nickname);
   };
 
-  const handleClickKillVote = (sub) => {
+  const handleClickKillVote = () => {
     if (!isVoteTime && !isSkillTime) return;
+    if (imageOn !== '') return;
 
     Swal.fire({
-      title: `${getNicknameTag(sub)}님을 선택하겠습니까?`,
+      title: `${useNickname}님을 선택하겠습니까?`,
       text: '다시 되돌릴 수 없습니다. 신중하세요.',
       icon: 'warning',
       showCancelButton: true,
@@ -97,54 +100,31 @@ function UserVideoComponent(props) {
       reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
-        const nickname = getNicknameTag(sub);
-        props.setImageOn(nickname);
-        if (isVoteTime) useVoteAndPost(nickname);
-        if (isSkillTime) useSkillAndPost(roleName, nickname);
-        // setIsVoteTime(false);
-        // setIsSkillTime(false);
-        // props.setImageOn('');
+        setImageOn(useNickname);
+        if (isVoteTime) useVoteAndPost(useNickname);
+        if (isSkillTime) useSkillAndPost(myRole, useNickname);
       }
     });
   };
 
   useEffect(() => {
-    if (props.streamManager && !!videoRef.current) {
-      props.streamManager.addVideoElement(videoRef.current);
+    if (streamManager && !!videoRef.current) {
+      streamManager.addVideoElement(videoRef.current);
     }
-  }, [props.streamManager]);
+  }, [streamManager]);
 
   return (
     <>
-      {props.streamManager !== undefined ? (
+      {streamManager !== undefined ? (
         <S.UserInfoWrapper>
-          {/* {checkDeath(deadPlayers, getNicknameTag(props.streamManager)) ? (
-            <GraveComponent></GraveComponent>
-          ) : (
-            <VoteAndSkill
-              streamManager={props.streamManager}
-              getNicknameTag={getNicknameTag}
-              setImageOn={props.setImageOn}
-              imageOn={props.imageOn}
-              isVoteTime={isVoteTime}
-              isSkillTime={isSkillTime}
-              myRole={props.myRole}
-            />
-          )} */}
-          <GraveComponent streamManager={props.streamManager} getNicknameTag={getNicknameTag}></GraveComponent>
-          <VoteAndSkill
-            streamManager={props.streamManager}
-            getNicknameTag={getNicknameTag}
-            setImageOn={props.setImageOn}
-            imageOn={props.imageOn}
-            myRole={props.myRole}
-          />
-          {checkDeath(deadPlayers, getNicknameTag(props.streamManager)) ? null : (
-            <S.VideoContainer onClick={() => handleClickKillVote(props.streamManager)}>
+          <GraveComponent useNickname={useNickname}></GraveComponent>
+          <VoteAndSkill useNickname={useNickname} imageOn={imageOn} myRole={myRole} />
+          {checkDeath(deadPlayers, useNickname) ? null : (
+            <S.VideoContainer onClick={handleClickKillVote}>
               <S.CustomScreen autoPlay={true} ref={videoRef} />
             </S.VideoContainer>
           )}
-          <span>{getNicknameTag(props.streamManager)}</span>
+          <span>{useNickname}</span>
         </S.UserInfoWrapper>
       ) : null}
     </>

@@ -3,12 +3,12 @@ import { useRecoilState } from 'recoil';
 import { deadPlayerState } from 'recoil/atoms/gameState';
 import { checkDeath } from 'utils/checkDeath';
 
-function GraveComponent(props) {
+function GraveComponent({ useNickname }) {
   const [deadPlayers] = useRecoilState(deadPlayerState);
 
   return (
     <>
-      {checkDeath(deadPlayers, props.getNicknameTag(props.streamManager)) ? (
+      {checkDeath(deadPlayers, useNickname) ? (
         <S.GraveImage src={process.env.PUBLIC_URL + '/image/game/grave_image.svg'}></S.GraveImage>
       ) : null}
     </>
