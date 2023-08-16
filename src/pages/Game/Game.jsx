@@ -24,7 +24,7 @@ function Game() {
     return () => {
       setSkill(1); // 스킬 사용 횟수 초기화;
       try {
-        // gameAPI.exitRoom(sessionId);
+        gameAPI.exitRoom(sessionId);
       } catch (e) {
         console.log(e);
       }

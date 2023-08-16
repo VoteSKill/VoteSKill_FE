@@ -27,7 +27,6 @@ function PlayerList({ subscribers, publisher, roleData, setInGame, sessionId, se
   const gameStart = async () => {
     try {
       const { status } = await gameAPI.startGame(sessionId);
-      // setInGame(true); //임시로 게임화면으로 전환
     } catch (error) {
       console.log('게임시작 실패', error);
     }
