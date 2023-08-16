@@ -41,38 +41,11 @@ export const ButtonSquare = styled.div`
   column-gap: 50px;
 `;
 
-// 강퇴버튼
-export const DropButton = styled.button`
-  background: linear-gradient(to bottom, #ededed 5%, #dfdfdf 100%);
-  background-color: #ededed;
-  border-radius: 6px;
-  display: inline-block;
-  cursor: pointer;
-  color: black;
-  font-family: Arial;
-  font-size: 13px;
-  font-weight: bold;
-  padding: 3px 10px;
-  text-decoration: none;
-  text-shadow: 0px 1px 0px #810e05;
-
-  &:hover {
-    background: linear-gradient(to bottom, #c62d1f 5%, #f24537 100%);
-    background-color: #c62d1f;
-  }
-  &:active {
-    position: relative;
-    top: 1px;
-  }
-`;
-// 나가기버튼
 export const OutButton = styled.button`
-  height: 100px;
-  margin-top: 20px;
+  height: 64px;
   background: white;
   border-radius: 6px;
   box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
-  box-sizing: border-box;
   color: black;
   cursor: pointer;
   display: inline-block;
@@ -83,9 +56,6 @@ export const OutButton = styled.button`
   min-height: 40px;
   text-align: center;
   text-rendering: geometricprecision;
-  text-transform: none;
-  user-select: none;
-  -webkit-user-select: none;
   touch-action: manipulation;
   vertical-align: middle;
   &:hover,

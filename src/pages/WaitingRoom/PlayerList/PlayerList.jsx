@@ -4,12 +4,13 @@ import useModal from 'hooks/useModal';
 import { useRecoilState } from 'recoil';
 import { hostState } from 'recoil/atoms/hostState';
 import gameAPI from 'apis/gameAPI';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function PlayerList({ subscribers, publisher, roleData, setInGame, sessionId, setMyRole }) {
   const [userList, setUserList] = useState([]);
   const [host, setHost] = useRecoilState(hostState);
   const { openModal: openUserInfo } = useModal('UserInfo');
+  const navigate = useNavigate();
 
   useEffect(() => {
     setUserList(subscribers);
@@ -34,10 +35,7 @@ function PlayerList({ subscribers, publisher, roleData, setInGame, sessionId, se
 
   const checkHost = () => sessionStorage.getItem('nickname') === host;
 
-  const outButtonstyle = {
-    'text-decoration': 'none',
-    color: 'black',
-  };
+  const navigateTolobby = () => navigate('/lobby');
 
   return (
     <S.PlayerListWrapper>
@@ -52,11 +50,7 @@ function PlayerList({ subscribers, publisher, roleData, setInGame, sessionId, se
         ))}
       </S.Square>
       <S.ButtonSquare>
-        <S.OutButton>
-          <Link to="/lobby" style={outButtonstyle}>
-            EXIT
-          </Link>
-        </S.OutButton>
+        <S.OutButton onClick={navigateTolobby}>EXIT</S.OutButton>
         {checkHost() && <S.StartButton onClick={gameStart}>START</S.StartButton>}
       </S.ButtonSquare>
     </S.PlayerListWrapper>

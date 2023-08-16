@@ -60,13 +60,18 @@ const useOpenVidu = () => {
 
   useEffect(() => {
     if (!session) return;
-    getToken().then(async (token) => {
-      try {
-        connectSession(token);
-      } catch (error) {
-        console.log('세션 연결에 오류가 발생했습니다.', error, error.message);
-      }
-    });
+    getToken()
+      .then(async (token) => {
+        try {
+          connectSession(token);
+        } catch (error) {
+          console.log('세션 연결에 오류가 발생했습니다.', error, error.message);
+        }
+      })
+      .catch((e) => {
+        console.log(e, 'dd');
+        return;
+      });
   }, [OV, session]);
 
   const connectSession = async (token) => {
@@ -89,6 +94,7 @@ const useOpenVidu = () => {
     } catch {
       alert('입장실패!');
       location.replace('/lobby');
+      return;
     }
   };
 
