@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as S from './CamScreen.Style';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { isSkillTimeState, isVoteTimeState, skillState } from 'recoil/atoms/gameState';
+import { checkDeathSelector, isSkillTimeState, isVoteTimeState, skillState } from 'recoil/atoms/gameState';
 import gameAPI from 'apis/gameAPI';
 import showSwal from 'utils/showSwal';
 import VoteAndSkill from 'pages/GameRoom/VoteAndSkill/VoteAndSkill';
@@ -47,6 +47,7 @@ function UserVideoComponent({ streamManager, setImageOn, imageOn, myRole, roomId
   const deadPlayers = useRecoilValue(deadPlayerState);
   const [skill, setSkill] = useRecoilState(skillState(myRole));
   const [useNickname, setUserNickname] = useState('');
+  const myDeath = useRecoilValue(checkDeathSelector);
 
   useEffect(() => {
     const getNicknameTag = (sub) => JSON.parse(sub.stream.connection.data).clientData;
@@ -86,6 +87,10 @@ function UserVideoComponent({ streamManager, setImageOn, imageOn, myRole, roomId
 
   const handleClickKillVote = () => {
     if ((!isVoteTime && !isSkillTime) || imageOn !== '') return;
+    if (myDeath) {
+      showSwal('사망자는 게임에 참여할 수 없습니다.', '확인');
+      return;
+    }
 
     Swal.fire({
       title: `${useNickname}님을 선택하겠습니까?`,
