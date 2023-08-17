@@ -120,7 +120,7 @@ function UserVideoComponent({ streamManager, setImageOn, imageOn, myRole, roomId
     <>
       {streamManager !== undefined ? (
         <S.UserInfoWrapper>
-          <GraveComponent useNickname={useNickname}></GraveComponent>
+          <GraveComponent useNickname={useNickname} />
           <VoteAndSkill useNickname={useNickname} imageOn={imageOn} myRole={myRole} />
           {checkDeath(deadPlayers, useNickname) ? null : (
             <S.VideoContainer onClick={handleClickKillVote}>
