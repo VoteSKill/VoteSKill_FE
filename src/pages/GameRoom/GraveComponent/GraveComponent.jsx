@@ -1,4 +1,4 @@
-import * as S from 'components/gravecomponent/GraveComponent.Style';
+import * as S from 'pages/GameRoom/GraveComponent/GraveComponent.Style';
 import { useRecoilValue } from 'recoil';
 import { deadPlayerState } from 'recoil/atoms/gameState';
 import { checkDeath } from 'utils/checkDeath';

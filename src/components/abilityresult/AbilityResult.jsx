@@ -56,16 +56,12 @@ function AbilityResult(props) {
   const handleJobModal = () => {
     setShowJobModal(!showJobModal);
   };
-  // 2
   useEffect(() => {
-    //console.log(modalToggleState);
     openModal();
     handleJobModal();
     setTimeout(() => {
       handleJobModal();
     }, 5000);
-    // false로
-    //setShowJobModal();
   }, []);
 
   return (

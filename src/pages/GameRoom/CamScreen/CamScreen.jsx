@@ -6,7 +6,7 @@ import gameAPI from 'apis/gameAPI';
 import showSwal from 'utils/showSwal';
 import VoteAndSkill from 'pages/GameRoom/VoteAndSkill/VoteAndSkill';
 import { deadPlayerState } from 'recoil/atoms/gameState';
-import GraveComponent from 'components/gravecomponent/GraveComponent';
+import GraveComponent from 'pages/GameRoom/GraveComponent/GraveComponent';
 import { checkDeath } from 'utils/checkDeath';
 import Swal from 'sweetalert2';
 
