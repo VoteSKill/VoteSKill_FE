@@ -87,6 +87,7 @@ function UserVideoComponent({ streamManager, setImageOn, imageOn, myRole, roomId
 
   const handleClickKillVote = () => {
     if ((!isVoteTime && !isSkillTime) || imageOn !== '') return;
+    if (myRole === 'PRIEST' && !checkDeath(deadPlayers, useNickname)) return;
     if (myDeath) {
       showSwal('사망자는 게임에 참여할 수 없습니다.', '확인');
       return;
