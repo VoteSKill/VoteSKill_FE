@@ -85,17 +85,15 @@ function UserVideoComponent({ streamManager, setImageOn, imageOn, myRole, roomId
   };
 
   const handleClickKillVote = () => {
-    if (!isVoteTime && !isSkillTime) return;
-    if (imageOn !== '') return;
+    if ((!isVoteTime && !isSkillTime) || imageOn !== '') return;
 
     Swal.fire({
       title: `${useNickname}님을 선택하겠습니까?`,
-      text: '다시 되돌릴 수 없습니다. 신중하세요.',
-      icon: 'warning',
+      text: '다시 되돌릴 수 없습니다. 신중히 선택세요.',
       showCancelButton: true,
       confirmButtonColor: '#6367CE',
       cancelButtonColor: '#970000',
-      confirmButtonText: '승인',
+      confirmButtonText: '확인',
       cancelButtonText: '취소',
       reverseButtons: true,
     }).then((result) => {
